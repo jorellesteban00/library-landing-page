@@ -6,17 +6,11 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <span class="text-xl font-bold text-gray-800">Library System</span>
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <!-- Navigation Links (Left) - Always Home -->
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-                </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -91,13 +85,6 @@
             @elseif(Auth::user()->role === 'staff')
                 <x-responsive-nav-link :href="route('staff.dashboard')" :active="request()->routeIs('staff.dashboard')">
                     {{ __('Staff Dashboard') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                    {{ __('Home') }}
-                </x-responsive-nav-link>
-            @else
-                <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                    {{ __('Home') }}
                 </x-responsive-nav-link>
             @endif
         </div>

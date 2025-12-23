@@ -22,6 +22,8 @@ class SiteContentController extends Controller
             'hero_subtitle' => 'nullable|string',
             'vision' => 'nullable|string',
             'mission' => 'nullable|string',
+            'goals' => 'nullable|string',
+            'contact_info' => 'nullable|string',
         ]);
 
         foreach ($validated as $key => $value) {

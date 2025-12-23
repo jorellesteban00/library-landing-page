@@ -13,16 +13,16 @@ export default {
         extend: {
             colors: {
                 brand: {
-                    50: '#eef2ff',
-                    100: '#e0e7ff',
-                    500: '#6366f1', // Indigo-500
-                    600: '#4f46e5', // Indigo-600
-                    700: '#4338ca', // Indigo-700
-                    900: '#312e81', // Indigo-900
+                    50: '#ecfdf5',
+                    100: '#d1fae5',
+                    500: '#10b981', // Emerald-500
+                    600: '#059669', // Emerald-600
+                    700: '#047857', // Emerald-700
+                    900: '#064e3b', // Emerald-900
                 },
                 accent: {
-                    DEFAULT: '#f43f5e', // Rose-500
-                    hover: '#e11d48',   // Rose-600
+                    DEFAULT: '#84cc16', // Lime-500
+                    hover: '#65a30d',   // Lime-600
                 }
             },
             fontFamily: {

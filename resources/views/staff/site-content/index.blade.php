@@ -35,6 +35,16 @@
                             <textarea name="mission" rows="3"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['mission'] ?? 'To provide quality resources and services to our community.' }}</textarea>
                         </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Goals</label>
+                            <textarea name="goals" rows="3"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['goals'] ?? 'To foster a culture of lifelong learning.' }}</textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Contact Information</label>
+                            <textarea name="contact_info" rows="3"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['contact_info'] ?? '123 Library St, Booktown' }}</textarea>
+                        </div>
 
                         <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

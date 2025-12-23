@@ -36,17 +36,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Resource Controllers for CMS
         Route::resource('news', \App\Http\Controllers\NewsController::class)->except(['index', 'show']); // Index/Show are on landing page
-        Route::resource('staff-profiles', \App\Http\Controllers\StaffProfileController::class)->except(['index', 'show']);
         Route::resource('books', \App\Http\Controllers\BookController::class)->except(['index', 'show']);
         Route::get('/site-content', [\App\Http\Controllers\SiteContentController::class, 'index'])->name('site-content.index');
         Route::post('/site-content', [\App\Http\Controllers\SiteContentController::class, 'store'])->name('site-content.store');
-        Route::post('/staff-profiles/reorder', [\App\Http\Controllers\StaffProfileController::class, 'reorder'])->name('staff-profiles.reorder');
         Route::post('/books/reorder', [\App\Http\Controllers\BookController::class, 'reorder'])->name('books.reorder');
         Route::post('/news/reorder', [\App\Http\Controllers\NewsController::class, 'reorder'])->name('news.reorder');
+    });
+
+    // Librarian Only Management
+    Route::middleware(['role:librarian'])->prefix('staff')->name('staff.')->group(function () {
+        Route::resource('staff-profiles', \App\Http\Controllers\StaffProfileController::class)->except(['index', 'show']);
+        Route::post('/staff-profiles/reorder', [\App\Http\Controllers\StaffProfileController::class, 'reorder'])->name('staff-profiles.reorder');
+
+        // Menu Management Routes (New)
+        Route::resource('menus', \App\Http\Controllers\MenuController::class)->except(['show']);
+        Route::post('/menus/reorder', [\App\Http\Controllers\MenuController::class, 'reorder'])->name('menus.reorder');
+
+        // Page Management Routes (New)
+        Route::resource('pages', \App\Http\Controllers\PageController::class)->except(['show']);
     });
 });
 
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/pages/{page}', [\App\Http\Controllers\PageController::class, 'show'])->name('pages.show');
 
 require __DIR__ . '/auth.php';
