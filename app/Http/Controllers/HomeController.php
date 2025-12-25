@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\NewsItem;
 use App\Models\StaffProfile;
 use App\Models\Book;
+use App\Models\Page;
 use App\Models\SiteContent;
 use Illuminate\View\View;
 
@@ -24,6 +25,9 @@ class HomeController extends Controller
         // Prioritize featured books, then sort order, then latest. Limit to 4.
         $books = Book::orderBy('is_featured', 'desc')->orderBy('sort_order')->latest()->take(4)->get();
 
-        return view('welcome', compact('content', 'news', 'staff', 'books', 'menus'));
+        // Fetch published pages for navigation
+        $pages = Page::where('is_published', true)->orderBy('title')->get();
+
+        return view('welcome', compact('content', 'news', 'staff', 'books', 'menus', 'pages'));
     }
 }

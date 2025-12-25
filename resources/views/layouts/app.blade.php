@@ -10,15 +10,18 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600|playfair-display:700i&display=swap"
+        rel="stylesheet" />
 
     <!-- Scripts -->
-    <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         [x-cloak] {
             display: none !important;
+        }
+
+        .font-serif-accent {
+            font-family: 'Playfair Display', serif;
         }
     </style>
 </head>

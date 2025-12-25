@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Borrowing;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -10,6 +11,13 @@ use Illuminate\View\View;
 
 class BookController extends Controller
 {
+    public function index(): View
+    {
+        $books = Book::orderBy('sort_order')->orderBy('created_at', 'desc')->get();
+        $activeLoansCount = Borrowing::active()->count();
+        return view('staff.books.index', compact('books', 'activeLoansCount'));
+    }
+
     public function create(): View
     {
         return view('staff.books.create');
@@ -33,7 +41,7 @@ class BookController extends Controller
 
         Book::create($validated);
 
-        return redirect()->route('home')->with('status', 'Book added successfully!');
+        return redirect()->route('staff.books.index')->with('status', 'Book added successfully!');
     }
 
     public function edit(Book $book): View
@@ -59,13 +67,13 @@ class BookController extends Controller
 
         $book->update($validated);
 
-        return redirect()->route('home')->with('status', 'Book updated successfully!');
+        return redirect()->route('staff.books.index')->with('status', 'Book updated successfully!');
     }
 
     public function destroy(Book $book): RedirectResponse
     {
         $book->delete();
-        return redirect()->route('home')->with('status', 'Book deleted successfully!');
+        return redirect()->route('staff.books.index')->with('status', 'Book deleted successfully!');
     }
 
     public function reorder(Request $request): JsonResponse
@@ -80,5 +88,10 @@ class BookController extends Controller
         }
 
         return response()->json(['status' => 'success', 'message' => 'Order updated']);
+    }
+
+    public function show(Book $book): \Illuminate\View\View
+    {
+        return view('books.show', compact('book'));
     }
 }

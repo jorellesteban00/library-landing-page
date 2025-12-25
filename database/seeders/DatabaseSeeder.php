@@ -15,12 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Librarian
+        // Librarian (formerly Admin)
         User::firstOrCreate(
-            ['email' => 'librarian@example.com'],
+            ['email' => 'admin@library.com'],
             [
-                'name' => 'Librarian User',
-                'password' => bcrypt('password'),
+                'name' => 'Librarian',
+                'password' => bcrypt('admin123'),
                 'role' => 'librarian',
             ]
         );

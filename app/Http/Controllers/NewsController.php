@@ -10,6 +10,12 @@ use Illuminate\View\View;
 
 class NewsController extends Controller
 {
+    public function index(): View
+    {
+        $newsItems = NewsItem::latest()->get(); // Fetch all news items, newest first
+        return view('staff.news.index', compact('newsItems'));
+    }
+
     public function create(): View
     {
         return view('staff.news.create');
@@ -28,9 +34,10 @@ class NewsController extends Controller
             $validated['image'] = $request->file('image')->store('news', 'public');
         }
 
-        $request->user()->newsItems()->create($validated);
+        $validated['user_id'] = $request->user()->id;
+        NewsItem::create($validated);
 
-        return redirect()->route('home')->with('status', 'News added successfully!');
+        return redirect()->route('staff.news.index')->with('status', 'News added successfully!');
     }
 
     public function edit(NewsItem $news): View
@@ -53,13 +60,13 @@ class NewsController extends Controller
 
         $news->update($validated);
 
-        return redirect()->route('home')->with('status', 'News updated successfully!');
+        return redirect()->route('staff.news.index')->with('status', 'News updated successfully!');
     }
 
     public function destroy(NewsItem $news): RedirectResponse
     {
         $news->delete();
-        return redirect()->route('home')->with('status', 'News deleted successfully!');
+        return redirect()->route('staff.news.index')->with('status', 'News deleted successfully!');
     }
 
     public function reorder(Request $request): JsonResponse
@@ -74,5 +81,10 @@ class NewsController extends Controller
         }
 
         return response()->json(['status' => 'success', 'message' => 'Order updated']);
+    }
+
+    public function show(NewsItem $news): View
+    {
+        return view('news.show', compact('news'));
     }
 }

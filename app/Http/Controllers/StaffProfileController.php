@@ -10,6 +10,12 @@ use Illuminate\View\View;
 
 class StaffProfileController extends Controller
 {
+    public function index(): View
+    {
+        $staffProfiles = StaffProfile::orderBy('sort_order')->orderBy('created_at')->get();
+        return view('staff.profiles.index', compact('staffProfiles'));
+    }
+
     public function create(): View
     {
         return view('staff.profiles.create');
@@ -30,7 +36,7 @@ class StaffProfileController extends Controller
 
         StaffProfile::create($validated);
 
-        return redirect()->route('home')->with('status', 'Staff member added successfully!');
+        return redirect()->route('staff.staff-profiles.index')->with('status', 'Staff member added successfully!');
     }
 
     public function edit(StaffProfile $staffProfile): View
@@ -53,13 +59,13 @@ class StaffProfileController extends Controller
 
         $staffProfile->update($validated);
 
-        return redirect()->route('home')->with('status', 'Staff member updated successfully!');
+        return redirect()->route('staff.staff-profiles.index')->with('status', 'Staff member updated successfully!');
     }
 
     public function destroy(StaffProfile $staffProfile): RedirectResponse
     {
         $staffProfile->delete();
-        return redirect()->route('home')->with('status', 'Staff member deleted successfully!');
+        return redirect()->route('staff.staff-profiles.index')->with('status', 'Staff member deleted successfully!');
     }
 
     public function reorder(Request $request): JsonResponse

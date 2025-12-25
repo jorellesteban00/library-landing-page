@@ -6,6 +6,15 @@
         </h2>
     </x-slot>
 
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea.tinymce',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -28,22 +37,22 @@
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Vision</label>
                             <textarea name="vision" rows="3"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['vision'] ?? 'To be a center of excellence in information provision.' }}</textarea>
+                                class="tinymce shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['vision'] ?? 'To be a center of excellence in information provision.' }}</textarea>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Mission</label>
                             <textarea name="mission" rows="3"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['mission'] ?? 'To provide quality resources and services to our community.' }}</textarea>
+                                class="tinymce shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['mission'] ?? 'To provide quality resources and services to our community.' }}</textarea>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Goals</label>
                             <textarea name="goals" rows="3"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['goals'] ?? 'To foster a culture of lifelong learning.' }}</textarea>
+                                class="tinymce shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['goals'] ?? 'To foster a culture of lifelong learning.' }}</textarea>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-700 text-sm font-bold mb-2">Contact Information</label>
                             <textarea name="contact_info" rows="3"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['contact_info'] ?? '123 Library St, Booktown' }}</textarea>
+                                class="tinymce shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $content['contact_info'] ?? '123 Library St, Booktown' }}</textarea>
                         </div>
 
                         <button type="submit"
