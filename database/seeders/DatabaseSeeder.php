@@ -56,5 +56,7 @@ class DatabaseSeeder extends Seeder
                 'role' => 'user',
             ]
         );
+
+        $this->call(StaffProfileSeeder::class);
     }
 }

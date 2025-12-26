@@ -17,7 +17,7 @@ A modern, feature-rich Content Management System built with Laravel 12 for manag
 ## Features
 
 ### Content Management
-- **Dynamic Pages**: Create and manage custom pages with WYSIWYG editor (TinyMCE)
+- **Dynamic Pages**: Create and manage custom pages with WYSIWYG editor (Quill.js)
 - **News System**: Publish announcements and news articles with featured images
 - **Resource Management**: Organize and share library resources and external links
 - **Staff Directory**: Showcase library team members with profiles and contact information
@@ -275,7 +275,7 @@ graph TB
 **Technologies**:
 - **Tailwind CSS**: Utility-first CSS framework for responsive design
 - **Alpine.js**: Lightweight JavaScript framework for interactivity
-- **TinyMCE**: Rich text WYSIWYG editor for content creation
+- **Quill.js**: Modern rich text WYSIWYG editor for content creation with image upload support
 - **Vite**: Modern build tool for asset compilation
 
 **Key Files**:
@@ -351,16 +351,40 @@ pages → users (creator relationship)
 
 #### 4. File Storage
 
-**Storage Structure**:
 ```
 storage/app/public/
 ├── news/           # News article images
 ├── staff/          # Staff profile images
 ├── books/          # Book cover images
+├── page-images/    # WYSIWYG editor images (added automatically)
 └── resources/      # Resource files
 ```
 
 **Symlink**: `public/storage` → `storage/app/public`
+
+**Image Upload System**:
+When using the WYSIWYG editor (Quill) to create or edit pages, images are automatically uploaded to `storage/app/public/page-images/` and stored as files, not embedded in the database.
+
+**Key Features**:
+- ✅ File-based storage (not base64 in database)
+- ✅ Automatic image uploads via Quill editor
+- ✅ Browser-cacheable for better performance
+- ✅ CDN-ready architecture
+- ✅ Orphaned image cleanup command
+
+**Quick Commands**:
+```bash
+# Check for orphaned images (safe, no deletion)
+php artisan images:clean --dry-run
+
+# Clean up orphaned images (will ask for confirmation)
+php artisan images:clean
+```
+
+**Documentation**:
+- [`IMAGE_UPLOAD_GUIDE.md`](IMAGE_UPLOAD_GUIDE.md) - Complete implementation details
+- [`IMAGE_ENHANCEMENTS.md`](IMAGE_ENHANCEMENTS.md) - Optional optimizations and enhancements
+
 
 ---
 

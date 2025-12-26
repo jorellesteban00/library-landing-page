@@ -11,7 +11,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         } elseif ($user->role === 'staff') {
             return redirect()->route('staff.dashboard');
         }
-        return redirect()->route('home'); // Redirect normal users to landing page
+
+        // Member Dashboard logic
+        $activeBorrowings = \App\Models\Borrowing::with('book')
+            ->where('user_id', $user->id)
+            ->where('status', 'borrowed')
+            ->latest()
+            ->get();
+
+        $recentBooks = \App\Models\Book::where('status', 'available')
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view('dashboard', compact('activeBorrowings', 'recentBooks'));
     })->name('dashboard');
 
     // Standard Profile Routes
@@ -60,6 +73,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Page Management Routes
         Route::resource('pages', \App\Http\Controllers\PageController::class)->except(['show']);
+        Route::post('/pages/reorder', [\App\Http\Controllers\PageController::class, 'reorder'])->name('pages.reorder');
+        Route::get('/pages/{page}/preview', [\App\Http\Controllers\PageController::class, 'preview'])->name('pages.preview');
+        Route::post('/pages/upload-image', [\App\Http\Controllers\PageController::class, 'uploadImage'])->name('pages.upload-image');
 
         // Resource Management Routes
         Route::resource('resources', \App\Http\Controllers\ResourceController::class)->except(['show']);

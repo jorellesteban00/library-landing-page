@@ -86,8 +86,8 @@
                                 <option value="#team" {{ $menu->url === '#team' ? 'selected' : '' }}>Team Section
                                 </option>
                                 @foreach ($pages as $page)
-                                    <option value="{{ route('pages.show', $page->slug) }}"
-                                        {{ $menu->url === route('pages.show', $page->slug) ? 'selected' : '' }}>
+                                    <option value="{{ route('pages.show', $page->slug, false) }}"
+                                        {{ $menu->url === route('pages.show', $page->slug, false) ? 'selected' : '' }}>
                                         {{ $page->title }}</option>
                                 @endforeach
                             </select>

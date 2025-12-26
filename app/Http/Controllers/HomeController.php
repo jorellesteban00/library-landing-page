@@ -25,9 +25,12 @@ class HomeController extends Controller
         // Prioritize featured books, then sort order, then latest. Limit to 4.
         $books = Book::orderBy('is_featured', 'desc')->orderBy('sort_order')->latest()->take(4)->get();
 
-        // Fetch published pages for navigation
-        $pages = Page::where('is_published', true)->orderBy('title')->get();
+        // Fetch published pages for navigation (respects scheduled publishing)
+        $pages = Page::published()->topLevel()->orderBy('sort_order')->orderBy('title')->get();
 
-        return view('welcome', compact('content', 'news', 'staff', 'books', 'menus', 'pages'));
+        // Fetch published resources
+        $resources = \App\Models\Resource::published()->ordered()->latest()->get();
+
+        return view('welcome', compact('content', 'news', 'staff', 'books', 'menus', 'pages', 'resources'));
     }
 }

@@ -81,7 +81,7 @@
                                 <option value="#news">News Section</option>
                                 <option value="#team">Team Section</option>
                                 @foreach ($pages as $page)
-                                    <option value="{{ route('pages.show', $page->slug) }}">{{ $page->title }}</option>
+                                    <option value="{{ route('pages.show', $page->slug, false) }}">{{ $page->title }}</option>
                                 @endforeach
                             </select>
                         </div>

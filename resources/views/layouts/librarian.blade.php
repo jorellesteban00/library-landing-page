@@ -40,6 +40,16 @@
 
             <!-- Navigation -->
             <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
+                <a href="{{ route('home') }}"
+                    class="flex items-center px-4 py-3 hover:bg-white hover:text-gray-900 rounded-xl transition-all group text-gray-500">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Home</span>
+                </a>
+
                 <a href="{{ route('librarian.dashboard') }}"
                     class="flex items-center px-4 py-3 {{ request()->routeIs('librarian.dashboard') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,27 +60,18 @@
                     <span class="font-medium">Dashboard</span>
                 </a>
 
-                <a href="{{ route('staff.pages.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.pages.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                <!-- Borrowings (Visible to Staff & Librarian) -->
+                <a href="{{ route('staff.borrowings.index') }}"
+                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.borrowings.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
                         </path>
                     </svg>
-                    <span class="font-medium">Pages</span>
+                    <span class="font-medium">Borrowings</span>
                 </a>
 
-                <!-- News Link -->
-                <a href="{{ route('staff.news.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.news.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-                        </path>
-                    </svg>
-                    <span class="font-medium">News</span>
-                </a>
-
+                <!-- Checkouts/Books (Visible to All) -->
                 <a href="{{ route('staff.books.index') }}"
                     class="flex items-center px-4 py-3 {{ request()->routeIs('staff.books.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,34 +82,71 @@
                     <span class="font-medium">Books</span>
                 </a>
 
-                <a href="{{ route('staff.menus.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.menus.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                <!-- News Link (Visible to All) -->
+                <a href="{{ route('staff.news.index') }}"
+                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.news.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                    <span class="font-medium">Menus</span>
-                </a>
-
-                <a href="{{ route('staff.staff-profiles.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.staff-profiles.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
                         </path>
                     </svg>
-                    <span class="font-medium">Staff</span>
+                    <span class="font-medium">News</span>
                 </a>
 
-                <a href="{{ route('staff.resources.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.resources.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Resources</span>
-                </a>
+                @if(Auth::user()->role === 'librarian')
+                    <div class="px-4 py-2 mt-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                        Management
+                    </div>
+
+                    <a href="{{ route('staff.pages.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.pages.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Pages</span>
+                    </a>
+
+                    <a href="{{ route('staff.menus.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.menus.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <span class="font-medium">Menus</span>
+                    </a>
+
+                    <a href="{{ route('staff.staff-profiles.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.staff-profiles.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Staff Profiles</span>
+                    </a>
+
+                    <a href="{{ route('staff.resources.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.resources.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Resources</span>
+                    </a>
+
+                    <a href="{{ route('staff.site-content.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.site-content.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Site Content</span>
+                    </a>
+                @endif
             </nav>
 
             <!-- User -->

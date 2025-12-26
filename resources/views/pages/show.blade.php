@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $page->title }} - {{ config('app.name', 'VerdeLib') }}</title>
+    @if ($page->meta_description)
+        <meta name="description" content="{{ $page->meta_description }}">
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -17,61 +20,6 @@
     <style>
         .font-serif-accent {
             font-family: 'Playfair Display', serif;
-        }
-
-        .prose h1 {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 0.5em;
-            color: #111827;
-        }
-
-        .prose h2 {
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 0.5em;
-            color: #111827;
-        }
-
-        .prose h3 {
-            font-size: 1.25em;
-            font-weight: bold;
-            margin-bottom: 0.5em;
-            color: #111827;
-        }
-
-        .prose p {
-            margin-bottom: 1em;
-        }
-
-        .prose ul {
-            list-style-type: disc;
-            margin-left: 1.5em;
-            margin-bottom: 1em;
-        }
-
-        .prose ol {
-            list-style-type: decimal;
-            margin-left: 1.5em;
-            margin-bottom: 1em;
-        }
-
-        .prose blockquote {
-            border-left: 4px solid #10b981;
-            padding-left: 1em;
-            color: #6b7280;
-            font-style: italic;
-            margin: 1em 0;
-        }
-
-        .prose a {
-            color: #059669;
-            text-decoration: underline;
-        }
-
-        .prose img {
-            border-radius: 1rem;
-            margin: 1.5em 0;
         }
     </style>
 </head>
@@ -114,9 +62,35 @@
         <!-- Hero Section -->
         <div class="bg-gradient-to-b from-brand-50/50 to-transparent py-16">
             <div class="max-w-4xl mx-auto px-6">
+                <!-- Breadcrumbs -->
+                @if ($page->parent)
+                    <nav class="mb-6">
+                        <ol class="flex items-center gap-2 text-sm text-gray-500">
+                            <li><a href="{{ route('home') }}" class="hover:text-brand-600">Home</a></li>
+                            @foreach ($page->getBreadcrumbs() as $crumb)
+                                <li class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                    @if ($crumb->id === $page->id)
+                                        <span class="font-medium text-gray-900">{{ $crumb->title }}</span>
+                                    @else
+                                        <a href="{{ route('pages.show', $crumb) }}"
+                                            class="hover:text-brand-600">{{ $crumb->title }}</a>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ol>
+                    </nav>
+                @endif
+
                 <h1 class="text-5xl font-black text-gray-900 mb-4">
                     {{ $page->title }}
                 </h1>
+                @if ($page->meta_description)
+                    <p class="text-xl text-gray-500 mb-4">{{ $page->meta_description }}</p>
+                @endif
                 <div class="flex items-center gap-4 text-sm text-gray-500">
                     <span class="flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,13 +104,59 @@
             </div>
         </div>
 
+        <!-- Featured Image -->
+        @if ($page->featured_image)
+            <div class="max-w-4xl mx-auto px-6 -mt-8 mb-8">
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                    <img src="{{ asset('storage/' . $page->featured_image) }}" alt="{{ $page->title }}"
+                        class="w-full h-[400px] object-cover">
+                </div>
+            </div>
+        @endif
+
         <!-- Content -->
-        <div class="max-w-4xl mx-auto px-6 pb-24">
+        <div class="max-w-4xl mx-auto px-6 pb-16">
             <article class="bg-white p-8 md:p-12 rounded-3xl shadow-xl shadow-gray-100/50 border border-gray-100">
-                <div class="prose max-w-none text-gray-600 leading-relaxed text-lg">
+                <div class="prose prose-lg max-w-none 
+                            prose-headings:font-bold prose-headings:text-gray-900
+                            prose-p:text-gray-600 prose-p:leading-relaxed
+                            prose-a:text-brand-600 prose-a:no-underline hover:prose-a:underline
+                            prose-img:rounded-xl prose-img:shadow-lg
+                            prose-blockquote:border-brand-500 prose-blockquote:bg-brand-50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-xl
+                            prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded
+                            prose-pre:bg-gray-900 prose-pre:text-gray-100
+                            prose-ul:list-disc prose-ol:list-decimal">
                     {!! $page->content !!}
                 </div>
             </article>
+
+            <!-- Child Pages -->
+            @if ($page->visibleChildren->count() > 0)
+                <div class="mt-12">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Pages</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        @foreach ($page->visibleChildren as $child)
+                            <a href="{{ route('pages.show', $child) }}"
+                                class="block p-6 bg-white rounded-xl border border-gray-100 hover:border-brand-200 hover:shadow-lg transition group">
+                                @if ($child->featured_image)
+                                    <div class="h-32 rounded-lg overflow-hidden mb-4">
+                                        <img src="{{ asset('storage/' . $child->featured_image) }}"
+                                            alt="{{ $child->title }}"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition">
+                                    </div>
+                                @endif
+                                <h3
+                                    class="text-lg font-bold text-gray-900 group-hover:text-brand-600 transition mb-2">
+                                    {{ $child->title }}</h3>
+                                @if ($child->meta_description)
+                                    <p class="text-gray-500 text-sm">{{ Str::limit($child->meta_description, 100) }}
+                                    </p>
+                                @endif
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </main>
 

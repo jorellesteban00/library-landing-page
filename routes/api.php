@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\StaffController;
+use App\Http\Controllers\Api\BorrowingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/news', [NewsController::class, 'store']);
     Route::put('/news/{news}', [NewsController::class, 'update']);
     Route::delete('/news/{news}', [NewsController::class, 'destroy']);
+
+    // Borrowings / Reservations
+    Route::get('/borrowings', [BorrowingController::class, 'index']);
+    Route::post('/borrowings', [BorrowingController::class, 'store']);
+    Route::get('/borrowings/{borrowing}', [BorrowingController::class, 'show']);
+    Route::post('/borrowings/{borrowing}/return', [BorrowingController::class, 'returnBook']);
 });
 
 // Public Endpoints

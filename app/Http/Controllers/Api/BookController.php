@@ -9,9 +9,35 @@ use Illuminate\Http\JsonResponse;
 
 class BookController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(Book::all());
+        $query = Book::query();
+
+        // Search
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('author', 'like', "%{$search}%")
+                    ->orWhere('isbn', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by Status
+        if ($request->has('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        // Sorting
+        $sortField = $request->input('sort_by', 'created_at');
+        $sortDirection = $request->input('sort_dir', 'desc');
+        $allowedSorts = ['title', 'author', 'created_at', 'status'];
+
+        if (in_array($sortField, $allowedSorts)) {
+            $query->orderBy($sortField, $sortDirection === 'asc' ? 'asc' : 'desc');
+        }
+
+        return response()->json($query->paginate(15));
     }
 
     public function show(Book $book): JsonResponse

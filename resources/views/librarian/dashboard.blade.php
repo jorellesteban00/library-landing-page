@@ -265,6 +265,19 @@
                             </span>
                             Manage Navigation
                         </a>
+
+                        <a href="{{ route('staff.site-content.index') }}"
+                            class="block w-full text-left px-5 py-4 bg-white border border-gray-100 hover:border-brand-500 hover:shadow-md rounded-xl text-gray-700 hover:text-brand-600 font-bold transition flex items-center group">
+                            <span
+                                class="p-2 bg-emerald-50 text-emerald-600 rounded-lg mr-4 group-hover:bg-brand-50 group-hover:text-brand-600 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                    </path>
+                                </svg>
+                            </span>
+                            Edit Site Content
+                        </a>
                     </div>
                 </div>
             </div>

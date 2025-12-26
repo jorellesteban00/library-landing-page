@@ -162,16 +162,19 @@
                 </div>
                 
                 <h1 class="text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 tracking-tight leading-[1.1]">
-                    Discover, Learn,<br>
-                    and Grow <span class="font-serif-accent italic text-brand-600 relative inline-block">
-                        Naturally.
-                        <svg class="absolute -bottom-2 left-0 w-full h-3 text-brand-300/50" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none" /></svg>
-                    </span>
+                    @if(isset($content['hero_title']))
+                        {{ $content['hero_title'] }}
+                    @else
+                        Discover, Learn,<br>
+                        and Grow <span class="font-serif-accent italic text-brand-600 relative inline-block">
+                            Naturally.
+                            <svg class="absolute -bottom-2 left-0 w-full h-3 text-brand-300/50" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none" /></svg>
+                        </span>
+                    @endif
                 </h1>
                 
                 <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-500 mb-12 leading-relaxed font-medium">
-                    Access a world of knowledge, community events, and digital
-                    resources through our modern eco-conscious library portal.
+                    {{ $content['hero_subtitle'] ?? 'Access a world of knowledge, community events, and digital resources through our modern eco-conscious library portal.' }}
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-4">
@@ -215,7 +218,9 @@
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                         </div>
                         <h3 class="text-2xl font-black text-gray-900 mb-3 font-serif-accent italic">Our Vision</h3>
-                        <p class="text-gray-500 text-base leading-relaxed max-w-xs mx-auto">To be a pioneer in sustainable knowledge management and community engagement.</p>
+                        <div class="text-gray-500 text-base leading-relaxed max-w-xs mx-auto prose prose-sm">
+                            {!! $content['vision'] ?? 'To be a pioneer in sustainable knowledge management and community engagement.' !!}
+                        </div>
                     </div>
                     <!-- Mission -->
                     <div class="flex flex-col items-center text-center group p-8 rounded-[0.5rem_2rem] hover:bg-emerald-50/50 transition-colors duration-500">
@@ -223,7 +228,9 @@
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
                         <h3 class="text-2xl font-black text-gray-900 mb-3 font-serif-accent italic">Our Mission</h3>
-                        <p class="text-gray-500 text-base leading-relaxed max-w-xs mx-auto">To foster a culture of lifelong learning through accessible, green resources.</p>
+                        <div class="text-gray-500 text-base leading-relaxed max-w-xs mx-auto prose prose-sm">
+                            {!! $content['mission'] ?? 'To foster a culture of lifelong learning through accessible, green resources.' !!}
+                        </div>
                     </div>
                      <!-- Goals -->
                     <div class="flex flex-col items-center text-center group p-8 rounded-[2rem_0.5rem] hover:bg-lime-50/50 transition-colors duration-500">
@@ -231,7 +238,9 @@
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <h3 class="text-2xl font-black text-gray-900 mb-3 font-serif-accent italic">Our Goals</h3>
-                        <p class="text-gray-500 text-base leading-relaxed max-w-xs mx-auto">Promoting environmental awareness while preserving human knowledge.</p>
+                        <div class="text-gray-500 text-base leading-relaxed max-w-xs mx-auto prose prose-sm">
+                            {!! $content['goals'] ?? 'Promoting environmental awareness while preserving human knowledge.' !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -384,6 +393,9 @@
                     <p class="text-gray-500 text-sm leading-relaxed mb-6">
                         Empowering our community with knowledge, digital tools, and a space for lifelong learning.
                     </p>
+                    <div class="text-gray-500 text-sm leading-relaxed mb-6 prose prose-sm">
+                        {!! $content['contact_info'] ?? '' !!}
+                    </div>
                     <div class="flex gap-4">
                         <a href="#"
                             class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 hover:bg-brand-600 hover:text-white transition-colors">
@@ -403,8 +415,25 @@
                 <div>
                     <h4 class="font-bold text-gray-900 uppercase tracking-wider text-xs mb-6">Digital Resources</h4>
                     <ul class="space-y-4">
-                        <li><a href="#" class="text-gray-500 hover:text-brand-600 text-sm transition-colors">Coming
-                                soon...</a></li>
+                        @forelse($resources as $resource)
+                            <li>
+                                <a href="{{ $resource->resource_url }}" target="_blank" 
+                                   class="text-gray-500 hover:text-brand-600 text-sm transition-colors flex items-center gap-2">
+                                    {{ $resource->title }}
+                                    @if($resource->type === 'document' || $resource->type === 'image')
+                                        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                        </svg>
+                                    @else
+                                        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                    @endif
+                                </a>
+                            </li>
+                        @empty
+                            <li><span class="text-gray-400 text-sm">Coming soon...</span></li>
+                        @endforelse
                     </ul>
                 </div>
 

@@ -33,6 +33,6 @@ class SiteContentController extends Controller
             );
         }
 
-        return redirect()->route('home')->with('status', 'Content updated successfully!');
+        return redirect()->route('staff.site-content.index')->with('status', 'Site content updated successfully!');
     }
 }

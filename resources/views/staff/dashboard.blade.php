@@ -9,7 +9,7 @@
                     PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome back, {{ Auth::user()->name }}!
                 </h1>
-                <p class="text-gray-500 mt-1">Manage your library content from here.</p>
+                <p class="text-gray-500 mt-1">Here is an overview of the library's content.</p>
             </div>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -21,53 +21,15 @@
         </div>
 
         <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <!-- Pages -->
-            <a href="{{ route('staff.pages.index') }}"
-                class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition group">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">Pages</p>
-                        <h3 class="text-3xl font-black text-gray-800">{{ \App\Models\Page::count() }}</h3>
-                        <p class="text-brand-500 text-sm font-bold mt-2 group-hover:underline">Manage →</p>
-                    </div>
-                    <div class="p-3 bg-brand-50 rounded-xl">
-                        <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-            </a>
-
-            <!-- News -->
-            <a href="{{ route('staff.news.index') }}"
-                class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition group">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">News</p>
-                        <h3 class="text-3xl font-black text-gray-800">{{ \App\Models\NewsItem::count() }}</h3>
-                        <p class="text-emerald-500 text-sm font-bold mt-2 group-hover:underline">Manage →</p>
-                    </div>
-                    <div class="p-3 bg-emerald-50 rounded-xl">
-                        <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-            </a>
-
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <!-- Books -->
             <a href="{{ route('staff.books.index') }}"
                 class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition group">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">Books</p>
+                        <p class="text-gray-500 text-sm font-medium mb-1">Books Content</p>
                         <h3 class="text-3xl font-black text-gray-800">{{ \App\Models\Book::count() }}</h3>
-                        <p class="text-blue-500 text-sm font-bold mt-2 group-hover:underline">Manage →</p>
+                        <p class="text-blue-500 text-sm font-bold mt-2 group-hover:underline">Manage Books →</p>
                     </div>
                     <div class="p-3 bg-blue-50 rounded-xl">
                         <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,20 +41,39 @@
                 </div>
             </a>
 
-            <!-- Staff -->
-            <a href="{{ route('staff.staff-profiles.index') }}"
+            <!-- News -->
+            <a href="{{ route('staff.news.index') }}"
                 class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition group">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">Staff</p>
-                        <h3 class="text-3xl font-black text-gray-800">{{ \App\Models\StaffProfile::count() }}</h3>
-                        <p class="text-purple-500 text-sm font-bold mt-2 group-hover:underline">Manage →</p>
+                        <p class="text-gray-500 text-sm font-medium mb-1">News Articles</p>
+                        <h3 class="text-3xl font-black text-gray-800">{{ \App\Models\NewsItem::count() }}</h3>
+                        <p class="text-emerald-500 text-sm font-bold mt-2 group-hover:underline">Manage News →</p>
                     </div>
-                    <div class="p-3 bg-purple-50 rounded-xl">
-                        <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="p-3 bg-emerald-50 rounded-xl">
+                        <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
                             </path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Active Loans (Borrowings) -->
+            <a href="{{ route('staff.borrowings.index') }}"
+                class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">Active Loans</p>
+                        <h3 class="text-3xl font-black text-gray-800">
+                            {{ \App\Models\Borrowing::where('status', 'borrowed')->count() }}</h3>
+                        <p class="text-orange-500 text-sm font-bold mt-2 group-hover:underline">Manage Loans →</p>
+                    </div>
+                    <div class="p-3 bg-orange-50 rounded-xl">
+                        <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                 </div>
@@ -137,20 +118,7 @@
                             <p class="text-sm text-gray-500">Add a book to the collection</p>
                         </div>
                     </a>
-                    <a href="{{ route('staff.site-content.index') }}"
-                        class="flex items-center p-4 bg-gray-50 rounded-xl hover:bg-purple-50 transition group">
-                        <div class="p-2 bg-purple-100 rounded-lg mr-4 group-hover:bg-purple-200 transition">
-                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="font-bold text-gray-800">Edit Site Content</p>
-                            <p class="text-sm text-gray-500">Update vision, mission, hero text</p>
-                        </div>
-                    </a>
+                    <!-- Removed Site Content Link for Staff -->
                 </div>
             </div>
 
@@ -164,7 +132,7 @@
                     <h3 class="text-xl font-bold mb-2">View Your Website</h3>
                     <p class="text-white/80 mb-6">See how your changes look on the live site.</p>
 
-                    <a href="{{ route('home') }}" target="_blank"
+                    <a href="{{ route('home') }}"
                         class="inline-flex items-center gap-2 px-6 py-3 bg-white text-brand-600 font-bold rounded-xl hover:bg-gray-100 transition shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
