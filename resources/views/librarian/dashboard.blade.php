@@ -253,6 +253,18 @@
                             </span>
                             Add Book
                         </a>
+
+                        <a href="{{ route('staff.menus.index') }}"
+                            class="block w-full text-left px-5 py-4 bg-white border border-gray-100 hover:border-brand-500 hover:shadow-md rounded-xl text-gray-700 hover:text-brand-600 font-bold transition flex items-center group">
+                            <span
+                                class="p-2 bg-cyan-50 text-cyan-600 rounded-lg mr-4 group-hover:bg-brand-50 group-hover:text-brand-600 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                            </span>
+                            Manage Navigation
+                        </a>
                     </div>
                 </div>
             </div>

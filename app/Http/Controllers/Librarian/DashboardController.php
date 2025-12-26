@@ -23,6 +23,8 @@ class DashboardController extends Controller
             'total_books' => \App\Models\Book::count(), // Distinct titles
             'copies_available' => \App\Models\Book::sum('available_quantity'),
             'active_loans' => \App\Models\Borrowing::where('status', 'borrowed')->count(),
+            'total_menus' => \App\Models\Menu::count(),
+            'visible_menus' => \App\Models\Menu::visible()->count(),
         ];
 
         $recentPages = \App\Models\Page::latest('updated_at')->take(4)->get();

@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Menu Management Routes
         Route::resource('menus', \App\Http\Controllers\MenuController::class)->except(['show']);
         Route::post('/menus/reorder', [\App\Http\Controllers\MenuController::class, 'reorder'])->name('menus.reorder');
+        Route::patch('/menus/{menu}/toggle-visibility', [\App\Http\Controllers\MenuController::class, 'toggleVisibility'])->name('menus.toggle-visibility');
 
         // Page Management Routes
         Route::resource('pages', \App\Http\Controllers\PageController::class)->except(['show']);

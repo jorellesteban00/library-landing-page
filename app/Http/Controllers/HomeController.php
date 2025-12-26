@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         // Fetch site content as key-value pairs
         $content = SiteContent::all()->pluck('value', 'key');
-        $menus = Menu::orderBy('order')->get();
+        $menus = Menu::visible()->orderBy('order')->get();
 
         $news = NewsItem::orderBy('sort_order')->orderBy('published_date', 'desc')->take(3)->get();
         $staff = StaffProfile::orderBy('sort_order')->orderBy('id')->get();

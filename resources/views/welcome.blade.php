@@ -42,17 +42,32 @@
                 </span>
             </a>
 
-            <!-- Center Navigation Links (Pages) -->
-            @if(isset($pages) && count($pages) > 0)
-                <div class="hidden md:flex items-center gap-1">
+            <!-- Center Navigation Links (Pages + Menus) -->
+            <div class="hidden md:flex items-center gap-1">
+                @if(isset($pages) && count($pages) > 0)
                     @foreach($pages as $page)
                         <a href="{{ route('pages.show', $page->slug) }}" 
                            class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">
                             {{ $page->title }}
                         </a>
                     @endforeach
-                </div>
-            @endif
+                @endif
+                @if(isset($menus) && count($menus) > 0)
+                    @foreach($menus as $menu)
+                        <a href="{{ $menu->url }}" 
+                           target="{{ $menu->target ?? '_self' }}"
+                           class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors flex items-center gap-1"
+                           @if($menu->link_type === 'external') rel="noopener noreferrer" @endif>
+                            {{ $menu->label }}
+                            @if($menu->target === '_blank')
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            @endif
+                        </a>
+                    @endforeach
+                @endif
+            </div>
 
             <!-- Auth Buttons -->
             <div class="flex items-center gap-4">
@@ -398,8 +413,18 @@
                     <h4 class="font-bold text-gray-900 uppercase tracking-wider text-xs mb-6">Quick Links</h4>
                     <ul class="space-y-4">
                         @foreach($menus as $menu)
-                            <li><a href="{{ $menu->url }}"
-                                    class="text-gray-500 hover:text-brand-600 text-sm transition-colors">{{ $menu->label }}</a>
+                            <li>
+                                <a href="{{ $menu->url }}"
+                                   target="{{ $menu->target ?? '_self' }}"
+                                   class="text-gray-500 hover:text-brand-600 text-sm transition-colors inline-flex items-center gap-1"
+                                   @if($menu->link_type === 'external') rel="noopener noreferrer" @endif>
+                                    {{ $menu->label }}
+                                    @if($menu->target === '_blank')
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                    @endif
+                                </a>
                             </li>
                         @endforeach
                     </ul>

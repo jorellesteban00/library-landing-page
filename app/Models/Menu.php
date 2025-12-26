@@ -12,8 +12,16 @@ class Menu extends Model
     protected $fillable = [
         'label',
         'url',
+        'link_type',
+        'description',
+        'target',
+        'is_visible',
+        'icon',
         'order',
         'parent_id',
+    ];
+    protected $casts = [
+        'is_visible' => 'boolean',
     ];
 
     public function parent()
@@ -24,5 +32,25 @@ class Menu extends Model
     public function children()
     {
         return $this->hasMany(Menu::class, 'parent_id')->orderBy('order');
+    }
+
+    public function visibleChildren()
+    {
+        return $this->hasMany(Menu::class, 'parent_id')->where('is_visible', true)->orderBy('order');
+    }
+
+    public function scopeVisible($query)
+    {
+        return $query->where('is_visible', true);
+    }
+
+    public function scopeTopLevel($query)
+    {
+        return $query->whereNull('parent_id');
+    }
+
+    public function isExternal(): bool
+    {
+        return $this->link_type === 'external';
     }
 }
