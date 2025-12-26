@@ -90,7 +90,7 @@ class BookController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Order updated']);
     }
 
-    public function show(Book $book): \Illuminate\View\View
+    public function show(Book $book): View
     {
         return view('books.show', compact('book'));
     }
