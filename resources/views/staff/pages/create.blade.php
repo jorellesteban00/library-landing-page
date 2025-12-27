@@ -211,33 +211,6 @@
                         </div>
                     </div>
 
-                    <!-- Featured Image Card -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Featured Image
-                        </h3>
-
-                        <div>
-                            <label for="featured_image"
-                                class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-200 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6"
-                                    id="upload-placeholder">
-                                    <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                                        </path>
-                                    </svg>
-                                    <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to
-                                            upload</span></p>
-                                    <p class="text-xs text-gray-400">PNG, JPG or WebP (max 2MB)</p>
-                                </div>
-                                <img id="image-preview" class="hidden w-full h-full object-cover rounded-xl" />
-                                <input id="featured_image" name="featured_image" type="file" class="hidden"
-                                    accept="image/*" />
-                            </label>
-                        </div>
-                    </div>
-
                     <!-- Help Card -->
                     <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
                         <div class="flex items-start gap-3">
@@ -343,20 +316,6 @@
             // Update hidden input before form submit
             document.getElementById('page-form').addEventListener('submit', function () {
                 document.getElementById('content').value = quill.root.innerHTML;
-            });
-
-            // Image preview functionality
-            document.getElementById('featured_image').addEventListener('change', function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        document.getElementById('image-preview').src = e.target.result;
-                        document.getElementById('image-preview').classList.remove('hidden');
-                        document.getElementById('upload-placeholder').classList.add('hidden');
-                    }
-                    reader.readAsDataURL(file);
-                }
             });
 
             // Toggle between WYSIWYG and HTML source view

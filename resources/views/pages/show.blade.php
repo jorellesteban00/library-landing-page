@@ -70,8 +70,8 @@
                             @foreach ($page->getBreadcrumbs() as $crumb)
                                 <li class="flex items-center gap-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                        </path>
                                     </svg>
                                     @if ($crumb->id === $page->id)
                                         <span class="font-medium text-gray-900">{{ $crumb->title }}</span>
@@ -106,15 +106,7 @@
             </div>
         </div>
 
-        <!-- Featured Image -->
-        @if ($page->featured_image)
-            <div class="max-w-4xl mx-auto px-6 -mt-8 mb-8">
-                <div class="rounded-2xl overflow-hidden shadow-xl">
-                    <img src="{{ asset('storage/' . $page->featured_image) }}" alt="{{ $page->title }}"
-                        class="w-full h-[400px] object-cover">
-                </div>
-            </div>
-        @endif
+
 
         <!-- Content -->
         <div class="max-w-4xl mx-auto px-6 pb-16">
@@ -136,19 +128,24 @@
                         @if(auth()->user()->role === 'librarian')
                             <!-- Editor Container (Hidden by default) -->
                             <div id="editor-container" class="hidden bg-white"></div>
-                            
+
                             <!-- Edit Controls -->
                             <div class="absolute -top-12 right-0 flex items-center gap-3">
-                                <div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
+                                <div
+                                    class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
                                     <span class="text-xs font-bold text-gray-500 uppercase">Edit Mode</span>
-                                    <button id="toggle-edit" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                                    <button id="toggle-edit"
+                                        class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
                                         <span class="sr-only">Enable editing</span>
-                                        <span id="toggle-circle" class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
+                                        <span id="toggle-circle"
+                                            class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
                                     </button>
                                 </div>
-                                <button id="save-content" class="hidden px-4 py-1.5 bg-brand-600 text-white rounded-full text-xs font-bold shadow-lg hover:bg-brand-700 transition flex items-center gap-2">
+                                <button id="save-content"
+                                    class="hidden px-4 py-1.5 bg-brand-600 text-white rounded-full text-xs font-bold shadow-lg hover:bg-brand-700 transition flex items-center gap-2">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
                                     </svg>
                                     Save Changes
                                 </button>
@@ -163,12 +160,24 @@
                         <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
                         <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
                         <style>
-                            .ql-toolbar { border-radius: 0.5rem 0.5rem 0 0; border-color: #f3f4f6 !important; background-color: #f9fafb; }
-                            .ql-container { border-radius: 0 0 0.5rem 0.5rem; border-color: #f3f4f6 !important; font-size: 1.125rem; }
-                            .ql-editor { min-height: 200px; }
+                            .ql-toolbar {
+                                border-radius: 0.5rem 0.5rem 0 0;
+                                border-color: #f3f4f6 !important;
+                                background-color: #f9fafb;
+                            }
+
+                            .ql-container {
+                                border-radius: 0 0 0.5rem 0.5rem;
+                                border-color: #f3f4f6 !important;
+                                font-size: 1.125rem;
+                            }
+
+                            .ql-editor {
+                                min-height: 200px;
+                            }
                         </style>
-                            <script>
-                            document.addEventListener('DOMContentLoaded', function() {
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
                                 const toggleBtn = document.getElementById('toggle-edit');
                                 const toggleCircle = document.getElementById('toggle-circle');
                                 const saveBtn = document.getElementById('save-content');
@@ -190,7 +199,7 @@
                                             // Show loading indicator
                                             const range = quill.getSelection(true);
                                             quill.insertText(range.index, 'Uploading image...', { 'italic': true });
-                                            
+
                                             // Create form data
                                             const formData = new FormData();
                                             formData.append('file', file);
@@ -223,16 +232,16 @@
                                     };
                                 }
 
-                                toggleBtn.addEventListener('click', function() {
+                                toggleBtn.addEventListener('click', function () {
                                     isEditing = !isEditing;
-                                    
+
                                     if (isEditing) {
                                         // Enable Edit Mode
                                         toggleBtn.classList.remove('bg-gray-200');
                                         toggleBtn.classList.add('bg-brand-500');
                                         toggleCircle.classList.remove('translate-x-1');
                                         toggleCircle.classList.add('translate-x-6');
-                                        
+
                                         saveBtn.classList.remove('hidden');
                                         displayDiv.classList.add('hidden');
                                         editorDiv.classList.remove('hidden');
@@ -248,7 +257,7 @@
                                                             [{ 'header': [1, 2, 3, false] }],
                                                             ['bold', 'italic', 'underline', 'strike'],
                                                             [{ 'color': [] }, { 'background': [] }],
-                                                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                                                             [{ 'align': [] }],
                                                             ['blockquote', 'code-block'],
                                                             ['link', 'image'],
@@ -267,7 +276,7 @@
                                         toggleBtn.classList.remove('bg-brand-500');
                                         toggleCircle.classList.add('translate-x-1');
                                         toggleCircle.classList.remove('translate-x-6');
-                                        
+
                                         saveBtn.classList.add('hidden');
                                         displayDiv.classList.remove('hidden');
                                         editorDiv.classList.add('hidden');
@@ -275,7 +284,7 @@
                                 });
 
                                 // Save Content
-                                saveBtn.addEventListener('click', async function() {
+                                saveBtn.addEventListener('click', async function () {
                                     const newContent = quill.root.innerHTML;
                                     const originalText = saveBtn.innerHTML;
                                     saveBtn.innerHTML = 'Saving...';
@@ -294,10 +303,10 @@
                                         if (response.ok) {
                                             // Update display
                                             displayDiv.innerHTML = newContent;
-                                            
+
                                             // Turn off edit mode
                                             toggleBtn.click();
-                                            
+
                                             // Show success toast
                                             alert('Page updated successfully!');
                                         } else {
@@ -325,16 +334,10 @@
                         @foreach ($page->visibleChildren as $child)
                             <a href="{{ route('pages.show', $child) }}"
                                 class="block p-6 bg-white rounded-xl border border-gray-100 hover:border-brand-200 hover:shadow-lg transition group">
-                                @if ($child->featured_image)
-                                    <div class="h-32 rounded-lg overflow-hidden mb-4">
-                                        <img src="{{ asset('storage/' . $child->featured_image) }}"
-                                            alt="{{ $child->title }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition">
-                                    </div>
-                                @endif
-                                <h3
-                                    class="text-lg font-bold text-gray-900 group-hover:text-brand-600 transition mb-2">
-                                    {{ $child->title }}</h3>
+
+                                <h3 class="text-lg font-bold text-gray-900 group-hover:text-brand-600 transition mb-2">
+                                    {{ $child->title }}
+                                </h3>
                                 @if ($child->meta_description)
                                     <p class="text-gray-500 text-sm">{{ Str::limit($child->meta_description, 100) }}
                                     </p>

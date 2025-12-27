@@ -255,54 +255,6 @@
                         @endif
                     </div>
 
-                    <!-- Featured Image Card -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                        <h3 class="text-lg font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Featured Image
-                        </h3>
-
-                        <div>
-                            @if ($page->featured_image)
-                                <div class="mb-4 relative group" id="current-image-container">
-                                    <img src="{{ asset('storage/' . $page->featured_image) }}"
-                                        alt="{{ $page->title }}" class="w-full h-40 object-cover rounded-xl">
-                                    <div
-                                        class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition rounded-xl flex items-center justify-center gap-3">
-                                        <span class="text-white text-sm">Upload new to replace</span>
-                                    </div>
-                                    <!-- Remove Image Button -->
-                                    <button type="button" 
-                                        onclick="removeFeaturedImage()"
-                                        class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition shadow-lg z-10"
-                                        title="Remove image">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <!-- Hidden input to signal image removal -->
-                                <input type="hidden" name="remove_featured_image" id="remove_featured_image" value="0">
-                            @endif
-
-                            <label for="featured_image"
-                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-200 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6" id="upload-placeholder">
-                                    <svg class="w-8 h-8 mb-2 text-gray-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
-                                        </path>
-                                    </svg>
-                                    <p class="text-sm text-gray-500"><span class="font-semibold">Click to
-                                            upload</span></p>
-                                </div>
-                                <img id="image-preview" class="hidden w-full h-full object-cover rounded-xl" />
-                                <input id="featured_image" name="featured_image" type="file" class="hidden"
-                                    accept="image/*" />
-                            </label>
-                        </div>
-                    </div>
-
                     <!-- Danger Zone -->
                     <div class="bg-white rounded-2xl shadow-sm border border-red-100 p-6">
                         <h3 class="text-lg font-bold text-red-700 mb-4">Danger Zone</h3>
@@ -410,66 +362,5 @@
                 document.getElementById('content').value = quill.root.innerHTML;
             });
 
-            // Image preview functionality
-            document.getElementById('featured_image').addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById('image-preview').src = e.target.result;
-                        document.getElementById('image-preview').classList.remove('hidden');
-                        document.getElementById('upload-placeholder').classList.add('hidden');
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-
-            // Toggle between WYSIWYG and HTML source view
-            let isSourceView = false;
-            const toggleBtn = document.getElementById('toggle-source');
-            const sourceBtnText = document.getElementById('source-btn-text');
-            const editorContainer = document.getElementById('editor-container');
-            const htmlSource = document.getElementById('html-source');
-
-            toggleBtn.addEventListener('click', function() {
-                isSourceView = !isSourceView;
-                
-                if (isSourceView) {
-                    // Switch to source view
-                    htmlSource.value = quill.root.innerHTML;
-                    editorContainer.classList.add('hidden');
-                    htmlSource.classList.remove('hidden');
-                    sourceBtnText.textContent = 'Visual Editor';
-                    toggleBtn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
-                    toggleBtn.classList.add('bg-brand-500', 'text-white', 'hover:bg-brand-600');
-                } else {
-                    // Switch back to visual editor
-                    quill.root.innerHTML = htmlSource.value;
-                    htmlSource.classList.add('hidden');
-                    editorContainer.classList.remove('hidden');
-                    sourceBtnText.textContent = 'View Source';
-                    toggleBtn.classList.remove('bg-brand-500', 'text-white', 'hover:bg-brand-600');
-                    toggleBtn.classList.add('bg-gray-100', 'hover:bg-gray-200');
-                }
-            });
-
-            // Update form submission to include source view changes
-            const originalSubmitHandler = document.getElementById('page-form').onsubmit;
-            document.getElementById('page-form').addEventListener('submit', function(e) {
-                // If in source view, update content from textarea
-                if (isSourceView) {
-                    quill.root.innerHTML = htmlSource.value;
-                }
-                document.getElementById('content').value = quill.root.innerHTML;
-            });
-        });
-
-        // Function to remove featured image
-        function removeFeaturedImage() {
-            if (confirm('Are you sure you want to remove the featured image?')) {
-                document.getElementById('current-image-container').remove();
-                document.getElementById('remove_featured_image').value = '1';
-            }
-        }
     </script>
 </x-librarian-layout>

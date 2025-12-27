@@ -38,22 +38,16 @@
                             <label for="role_text" class="block text-sm font-bold text-gray-700 mb-2">Role /
                                 Title</label>
                             <div class="relative">
-                                <select name="role_text" id="role_text"
-                                    class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 appearance-none cursor-pointer"
-                                    required>
-                                    <option value="Head Librarian" {{ $staffProfile->role_text == 'Head Librarian' ? 'selected' : '' }}>Head Librarian</option>
-                                    <option value="Assistant Librarian" {{ $staffProfile->role_text == 'Assistant Librarian' ? 'selected' : '' }}>Assistant Librarian</option>
-                                    <option value="Archivist" {{ $staffProfile->role_text == 'Archivist' ? 'selected' : '' }}>Archivist</option>
-                                    <option value="Staff" {{ $staffProfile->role_text == 'Staff' ? 'selected' : '' }}>
-                                        Staff</option>
-                                </select>
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                                <input type="text" name="role_text" id="role_text" list="roles"
+                                    value="{{ $staffProfile->role_text }}"
+                                    class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50"
+                                    placeholder="e.g. Senior Librarian" required>
+                                <datalist id="roles">
+                                    <option value="Head Librarian">
+                                    <option value="Assistant Librarian">
+                                    <option value="Archivist">
+                                    <option value="Staff">
+                                </datalist>
                             </div>
                         </div>
                     </div>
@@ -69,30 +63,53 @@
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">Profile Photo</label>
                         <div class="flex flex-col items-center gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                            @if($staffProfile->image)
-                                <img src="{{ asset('storage/' . $staffProfile->image) }}"
-                                    class="w-32 h-32 rounded-full object-cover shadow-md border-4 border-white">
-                            @else
-                                <div
-                                    class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">
+                            <div
+                                class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md">
+                                <img id="image-preview"
+                                    src="{{ $staffProfile->image ? asset('storage/' . $staffProfile->image) : '#' }}"
+                                    class="{{ $staffProfile->image ? '' : 'hidden' }} w-full h-full object-cover">
+
+                                <div id="image-placeholder"
+                                    class="{{ $staffProfile->image ? 'hidden' : '' }} w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
                                     <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z">
+                                        </path>
                                     </svg>
                                 </div>
-                            @endif
+                            </div>
                             <div class="w-full">
                                 <label for="image"
                                     class="block w-full text-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer transition">
                                     Change Photo
                                     <input id="image" name="image" type="file" class="hidden" accept="image/*"
-                                        onchange="document.getElementById('file-chosen').textContent = this.files[0].name" />
+                                        onchange="previewImage(this)" />
                                 </label>
                                 <span id="file-chosen" class="block text-center text-xs text-gray-500 mt-2">No file
                                     chosen</span>
                             </div>
                         </div>
                     </div>
+                    <script>
+                        function previewImage(input) {
+                            const preview = document.getElementById('image-preview');
+                            const placeholder = document.getElementById('image-placeholder');
+                            const fileName = document.getElementById('file-chosen');
+
+                            if (input.files && input.files[0]) {
+                                const reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    preview.src = e.target.result;
+                                    preview.classList.remove('hidden');
+                                    placeholder.classList.add('hidden');
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
+                                fileName.textContent = input.files[0].name;
+                            }
+                        }
+                    </script>
 
                     <!-- Actions -->
                     <div class="flex items-center justify-between pt-6 border-t border-gray-100">

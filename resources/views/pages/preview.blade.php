@@ -78,14 +78,13 @@
                         @foreach ($page->getBreadcrumbs() as $crumb)
                             <li class="flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                                    </path>
                                 </svg>
                                 @if ($crumb->id === $page->id)
                                     <span class="font-medium text-gray-900">{{ $crumb->title }}</span>
                                 @else
-                                    <a href="{{ route('pages.show', $crumb) }}"
-                                        class="hover:text-brand-600">{{ $crumb->title }}</a>
+                                    <a href="{{ route('pages.show', $crumb) }}" class="hover:text-brand-600">{{ $crumb->title }}</a>
                                 @endif
                             </li>
                         @endforeach
@@ -93,13 +92,7 @@
                 </nav>
             @endif
 
-            <!-- Featured Image -->
-            @if ($page->featured_image)
-                <div class="mb-8 rounded-2xl overflow-hidden shadow-xl">
-                    <img src="{{ asset('storage/' . $page->featured_image) }}" alt="{{ $page->title }}"
-                        class="w-full h-[400px] object-cover">
-                </div>
-            @endif
+
 
             <!-- Title -->
             <header class="mb-8">
@@ -129,9 +122,9 @@
                         @foreach ($page->visibleChildren as $child)
                             <a href="{{ route('pages.show', $child) }}"
                                 class="block p-6 bg-white rounded-xl border border-gray-100 hover:border-brand-200 hover:shadow-lg transition group">
-                                <h3
-                                    class="text-lg font-bold text-gray-900 group-hover:text-brand-600 transition mb-2">
-                                    {{ $child->title }}</h3>
+                                <h3 class="text-lg font-bold text-gray-900 group-hover:text-brand-600 transition mb-2">
+                                    {{ $child->title }}
+                                </h3>
                                 @if ($child->meta_description)
                                     <p class="text-gray-500 text-sm">{{ Str::limit($child->meta_description, 100) }}
                                     </p>

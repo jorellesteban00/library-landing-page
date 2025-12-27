@@ -20,15 +20,10 @@
 
             <!-- Page Info -->
             <div class="flex items-center gap-3">
-                @if ($page->featured_image)
-                    <img src="{{ asset('storage/' . $page->featured_image) }}" alt="{{ $page->title }}"
-                        class="w-10 h-10 rounded-lg object-cover">
-                @else
-                    <div
-                        class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center text-brand-600 font-bold">
-                        {{ strtoupper(substr($page->title, 0, 1)) }}
-                    </div>
-                @endif
+                <div
+                    class="w-10 h-10 rounded-lg bg-brand-100 flex items-center justify-center text-brand-600 font-bold">
+                    {{ strtoupper(substr($page->title, 0, 1)) }}
+                </div>
                 <div>
                     <h3 class="font-bold text-gray-900 group-hover:text-brand-600 transition">{{ $page->title }}</h3>
                     <p class="text-sm text-gray-400 font-mono">/pages/{{ $page->slug }}</p>

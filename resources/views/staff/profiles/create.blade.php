@@ -37,21 +37,15 @@
                             <label for="role_text" class="block text-sm font-bold text-gray-700 mb-2">Role /
                                 Title</label>
                             <div class="relative">
-                                <select name="role_text" id="role_text"
-                                    class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 appearance-none cursor-pointer"
-                                    required>
-                                    <option value="" disabled selected>Select a role...</option>
-                                    <option value="Head Librarian">Head Librarian</option>
-                                    <option value="Assistant Librarian">Assistant Librarian</option>
-                                    <option value="Archivist">Archivist</option>
-                                </select>
-                                <div
-                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                                <input type="text" name="role_text" id="role_text" list="roles"
+                                    class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50"
+                                    placeholder="e.g. Senior Librarian" required>
+                                <datalist id="roles">
+                                    <option value="Head Librarian">
+                                    <option value="Assistant Librarian">
+                                    <option value="Archivist">
+                                    <option value="Staff">
+                                </datalist>
                             </div>
                         </div>
                     </div>
@@ -69,8 +63,9 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2">Profile Photo</label>
                         <div class="flex items-center justify-center w-full">
                             <label for="image"
-                                class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-brand-300 transition group">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-brand-300 transition group overflow-hidden relative">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6"
+                                    id="upload-placeholder">
                                     <div
                                         class="w-12 h-12 mb-3 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 group-hover:bg-brand-100 group-hover:text-brand-600 transition">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,10 +78,31 @@
                                             upload</span> or drag and drop</p>
                                     <p class="text-xs text-gray-500">PNG, JPG or GIF (MAX. 2MB)</p>
                                 </div>
-                                <input id="image" name="image" type="file" class="hidden" accept="image/*" />
+                                <img id="image-preview" class="hidden w-full h-full object-contain absolute inset-0" />
+                                <input id="image" name="image" type="file" class="hidden" accept="image/*"
+                                    onchange="previewImage(event)" />
                             </label>
                         </div>
                     </div>
+                    <script>
+                        function previewImage(event) {
+                            const input = event.target;
+                            const preview = document.getElementById('image-preview');
+                            const placeholder = document.getElementById('upload-placeholder');
+
+                            if (input.files && input.files[0]) {
+                                const reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    preview.src = e.target.result;
+                                    preview.classList.remove('hidden');
+                                    placeholder.classList.add('hidden');
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
 
                     <!-- Actions -->
                     <div class="flex justify-end pt-4 border-t border-gray-100">
