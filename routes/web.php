@@ -74,6 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Page Management Routes
         Route::resource('pages', \App\Http\Controllers\PageController::class)->except(['show']);
         Route::post('/pages/reorder', [\App\Http\Controllers\PageController::class, 'reorder'])->name('pages.reorder');
+        Route::post('/pages/{page}/update-content', [\App\Http\Controllers\PageController::class, 'updateContent'])->name('pages.update-content');
         Route::get('/pages/{page}/preview', [\App\Http\Controllers\PageController::class, 'preview'])->name('pages.preview');
         Route::post('/pages/upload-image', [\App\Http\Controllers\PageController::class, 'uploadImage'])->name('pages.upload-image');
 

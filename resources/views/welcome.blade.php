@@ -44,14 +44,7 @@
 
             <!-- Center Navigation Links (Pages + Menus) -->
             <div class="hidden md:flex items-center gap-1">
-                @if(isset($pages) && count($pages) > 0)
-                    @foreach($pages as $page)
-                        <a href="{{ route('pages.show', $page->slug) }}" 
-                           class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">
-                            {{ $page->title }}
-                        </a>
-                    @endforeach
-                @endif
+
                 @if(isset($menus) && count($menus) > 0)
                     @foreach($menus as $menu)
                         <a href="{{ $menu->url }}" 

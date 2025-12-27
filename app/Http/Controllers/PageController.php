@@ -80,6 +80,7 @@ class PageController extends Controller
 
         $page = Page::create($validated);
 
+
         // Auto-create menu item if requested
         if ($request->boolean('add_to_menu')) {
             Menu::create([
@@ -207,6 +208,20 @@ class PageController extends Controller
             }
         }
         return response()->json(['status' => 'success']);
+    }
+
+    /**
+     * AJAX Content Update
+     */
+    public function updateContent(Request $request, Page $page)
+    {
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $page->update(['content' => $request->input('content')]);
+
+        return response()->json(['status' => 'success', 'message' => 'Page updated successfully']);
     }
 
     /**

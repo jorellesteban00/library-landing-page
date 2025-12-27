@@ -8,11 +8,13 @@
             font-size: 16px;
             line-height: 1.6;
         }
+
         .ql-toolbar {
             border-radius: 0.75rem 0.75rem 0 0;
             border-color: #e5e7eb;
             background: #f9fafb;
         }
+
         .ql-container {
             border-radius: 0 0 0.75rem 0.75rem;
             border-color: #e5e7eb;
@@ -112,10 +114,10 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                         <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                             <h3 class="text-lg font-bold text-gray-900">Page Content</h3>
-                            <button type="button" id="toggle-source" 
+                            <button type="button" id="toggle-source"
                                 class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                 </svg>
                                 <span id="source-btn-text">View Source</span>
@@ -125,10 +127,9 @@
                             <!-- Quill Editor Container -->
                             <div id="editor-container"></div>
                             <!-- HTML Source Editor (hidden by default) -->
-                            <textarea id="html-source" 
+                            <textarea id="html-source"
                                 class="hidden w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 font-mono text-sm"
-                                rows="20"
-                                placeholder="HTML source code..."></textarea>
+                                rows="20" placeholder="HTML source code..."></textarea>
                             <!-- Hidden input to store content -->
                             <input type="hidden" name="content" id="content">
                         </div>
@@ -152,6 +153,8 @@
                                 </div>
                                 </label>
                             </div>
+
+
 
                             <!-- Add to Navigation -->
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
@@ -193,13 +196,13 @@
                         </h3>
 
                         <div>
-                            <label for="parent_id" class="block text-sm font-bold text-gray-700 mb-2">Parent Page</label>
+                            <label for="parent_id" class="block text-sm font-bold text-gray-700 mb-2">Parent
+                                Page</label>
                             <select name="parent_id" id="parent_id"
                                 class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50">
                                 <option value="">— No Parent (Top Level) —</option>
                                 @foreach ($parentPages as $parent)
-                                    <option value="{{ $parent->id }}"
-                                        {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
+                                    <option value="{{ $parent->id }}" {{ old('parent_id') == $parent->id ? 'selected' : '' }}>
                                         {{ $parent->title }}
                                     </option>
                                 @endforeach
@@ -216,7 +219,8 @@
                         <div>
                             <label for="featured_image"
                                 class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-200 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6" id="upload-placeholder">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6"
+                                    id="upload-placeholder">
                                     <svg class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -261,7 +265,7 @@
 
     <!-- Quill Initialization -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Custom image handler for Quill
             function imageHandler() {
                 const input = document.createElement('input');
@@ -275,7 +279,7 @@
                         // Show loading indicator
                         const range = quill.getSelection(true);
                         quill.insertText(range.index, 'Uploading image...', { 'italic': true });
-                        
+
                         // Create form data
                         const formData = new FormData();
                         formData.append('file', file);
@@ -318,7 +322,7 @@
                             [{ 'header': [1, 2, 3, false] }],
                             ['bold', 'italic', 'underline', 'strike'],
                             [{ 'color': [] }, { 'background': [] }],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                             [{ 'align': [] }],
                             ['blockquote', 'code-block'],
                             ['link', 'image'],
@@ -337,16 +341,16 @@
             @endif
 
             // Update hidden input before form submit
-            document.getElementById('page-form').addEventListener('submit', function() {
+            document.getElementById('page-form').addEventListener('submit', function () {
                 document.getElementById('content').value = quill.root.innerHTML;
             });
 
             // Image preview functionality
-            document.getElementById('featured_image').addEventListener('change', function(e) {
+            document.getElementById('featured_image').addEventListener('change', function (e) {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         document.getElementById('image-preview').src = e.target.result;
                         document.getElementById('image-preview').classList.remove('hidden');
                         document.getElementById('upload-placeholder').classList.add('hidden');
@@ -362,9 +366,9 @@
             const editorContainer = document.getElementById('editor-container');
             const htmlSource = document.getElementById('html-source');
 
-            toggleBtn.addEventListener('click', function() {
+            toggleBtn.addEventListener('click', function () {
                 isSourceView = !isSourceView;
-                
+
                 if (isSourceView) {
                     // Switch to source view
                     htmlSource.value = quill.root.innerHTML;
@@ -385,7 +389,7 @@
             });
 
             // Update form submission to include source view changes
-            document.getElementById('page-form').addEventListener('submit', function(e) {
+            document.getElementById('page-form').addEventListener('submit', function (e) {
                 // If in source view, update content from textarea
                 if (isSourceView) {
                     quill.root.innerHTML = htmlSource.value;
