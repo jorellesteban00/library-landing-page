@@ -107,7 +107,32 @@ The project exposes a comprehensive RESTful API to support external integrations
 3.  **Processing**: Controller delegates the action to a Model.
 4.  **Response**: Server returns a JSON object with a status code (e.g., `200 OK`, `201 Created`, `422 Unprocessable Entity`).
 
+
 ### **Security**
 *   **Rate Limiting**: Prevent abuse by limiting requests per minute.
 *   **Token Verification**: Protected routes require a valid Bearer Token in the `Authorization` header.
 *   **Sanitization**: All inputs are sanitized to prevent SQL injection and XSS attacks.
+
+---
+
+## 5. Security Measures Implemented
+
+The application integrates rigorous security protocols to protect user data and system integrity:
+
+### **Authentication & Authorization**
+*   **Laravel Breeze (Web)**: Handles session-based authentication for the frontend, including Login, Logout, and Registration.
+*   **Laravel Sanctum (API)**: Manages token-based API authentication, issuing revocable API tokens for external consumers.
+*   **Role-Based Access Control (RBAC)**:
+    *   **Middleware**: Custom `CheckRole` middleware enforces permissions at the route level.
+    *   **Roles**: Strict segregation between `Librarian` (CMS Admin), `Staff` (Content Manager), and `Member` (User). access.
+
+### **Data Protection**
+*   **Input Validation**: All incoming HTTP requests are validated using Laravel's strict `FormRequest` classes (e.g., `store(Request $request)`), rejecting malformed data before processing.
+*   **SQL Injection Prevention**: Usage of Eloquent ORM ensures all database queries are essentially prepared statements, automatically escaping user input.
+*   **XSS Protection**: Blade templating engine automatically escapes output (`{{ $variable }}`) to prevent Cross-Site Scripting. We use `{!! !!}` only for sanitized HTML content (Quill Editor) where necessary.
+
+### **Session & Transport**
+*   **CSRF Protection**: All `POST`, `PUT`, and `DELETE` requests in the web application are protected by CSRF tokens to prevent Cross-Site Request Forgery.
+*   **Session Management**: Secure, server-side session storage with configurable lifetime and "HttpOnly" cookies to prevent client-side script access.
+*   **Encryption**: All sensitive data (passwords) is hashed using **Bcrypt** before storage.
+

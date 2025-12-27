@@ -15,7 +15,17 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (!$request->user() || !in_array($request->user()->role, $roles)) {
+        $userRole = $request->user() ? strtolower(trim($request->user()->role)) : null;
+        $allowedRoles = array_map(fn($r) => strtolower(trim($r)), $roles);
+
+        if (!$userRole || !in_array($userRole, $allowedRoles)) {
+            \Illuminate\Support\Facades\Log::info('Role Check Failed', [
+                'user_role_raw' => $request->user() ? $request->user()->role : 'null',
+                'user_role_processed' => $userRole,
+                'allowed_roles_raw' => $roles,
+                'allowed_roles_processed' => $allowedRoles,
+                'user_id' => $request->user() ? $request->user()->id : 'null'
+            ]);
             abort(403, 'Unauthorized action.');
         }
 
