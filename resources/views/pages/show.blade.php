@@ -45,6 +45,25 @@
                 </span>
             </a>
 
+            <!-- Center Navigation Links (Pages + Menus) -->
+            <div class="hidden md:flex items-center gap-1">
+                @if(isset($menus) && count($menus) > 0)
+                    @foreach($menus as $menu)
+                        <a href="{{ $menu->url }}" target="{{ $menu->target ?? '_self' }}"
+                            class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors flex items-center gap-1"
+                            @if($menu->link_type === 'external') rel="noopener noreferrer" @endif>
+                            {{ $menu->label }}
+                            @if($menu->target === '_blank')
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            @endif
+                        </a>
+                    @endforeach
+                @endif
+            </div>
+
             <!-- Back to Home -->
             <a href="{{ route('home') }}"
                 class="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-brand-600 transition-colors">
@@ -351,19 +370,106 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6.292a8.96 8.96 0 00-6-2.292c-1.052 0-2.062.18-3 .512v14.25c.938-.332 1.948-.512 3-.512 2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25c-.938-.332-1.948-.512-3-.512-2.305 0-4.408.867-6 2.292m0-14.25v14.25">
-                        </path>
-                    </svg>
+    <footer class="bg-brand-50/50 py-20 border-t border-brand-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-1">
+                    <a href="{{ route('home') }}" class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-brand-100/50 rounded-lg flex items-center justify-center text-brand-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6.292a8.96 8.96 0 00-6-2.292c-1.052 0-2.062.18-3 .512v14.25c.938-.332 1.948-.512 3-.512 2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25c-.938-.332-1.948-.512-3-.512-2.305 0-4.408.867-6 2.292m0-14.25v14.25">
+                                </path>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-black tracking-tighter">
+                            <span class="text-brand-600">Verde</span><span class="text-gray-900">Lib</span><span
+                                class="text-emerald-400">.</span>
+                        </span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">
+                        Empowering our community with knowledge, digital tools, and a space for lifelong learning.
+                    </p>
+                    <div class="text-gray-500 text-sm leading-relaxed mb-6 prose prose-sm">
+                        {!! $content['contact_info'] ?? '' !!}
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 hover:bg-brand-600 hover:text-white transition-colors">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
-                <span class="text-xl font-bold">VerdeLib</span>
+
+                <!-- Spacer -->
+                <div class="hidden md:block"></div>
+
+                <!-- Digital Resources -->
+                <div>
+                    <h4 class="font-bold text-gray-900 uppercase tracking-wider text-xs mb-6">Digital Resources</h4>
+                    <ul class="space-y-4">
+                        @forelse($resources as $resource)
+                            <li>
+                                <a href="{{ $resource->resource_url }}" target="_blank"
+                                    class="text-gray-500 hover:text-brand-600 text-sm transition-colors flex items-center gap-2">
+                                    {{ $resource->title }}
+                                    @if($resource->type === 'document' || $resource->type === 'image')
+                                        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                            </path>
+                                        </svg>
+                                    @else
+                                        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                            </path>
+                                        </svg>
+                                    @endif
+                                </a>
+                            </li>
+                        @empty
+                            <li><span class="text-gray-400 text-sm">Coming soon...</span></li>
+                        @endforelse
+                    </ul>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-gray-900 uppercase tracking-wider text-xs mb-6">Quick Links</h4>
+                    <ul class="space-y-4">
+                        @foreach($menus as $menu)
+                            <li>
+                                <a href="{{ $menu->url }}" target="{{ $menu->target ?? '_self' }}"
+                                    class="text-gray-500 hover:text-brand-600 text-sm transition-colors inline-flex items-center gap-1"
+                                    @if($menu->link_type === 'external') rel="noopener noreferrer" @endif>
+                                    {{ $menu->label }}
+                                    @if($menu->target === '_blank')
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14">
+                                            </path>
+                                        </svg>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-            <p class="text-gray-400 text-sm">&copy; {{ date('Y') }} VerdeLib. All rights reserved.</p>
+
+            <div
+                class="border-t border-gray-100 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-400 text-xs">&copy; {{ date('Y') }} VerdeLib. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-400 hover:text-gray-600 text-xs">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-gray-600 text-xs">Terms of Service</a>
+                </div>
+            </div>
         </div>
     </footer>
 

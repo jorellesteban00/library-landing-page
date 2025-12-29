@@ -185,7 +185,11 @@ class PageController extends Controller
             abort(404);
         }
 
-        return view('pages.show', compact('page'));
+        $menus = Menu::visible()->orderBy('order')->get();
+        $resources = \App\Models\Resource::published()->ordered()->latest()->get();
+        $content = \App\Models\SiteContent::all()->pluck('value', 'key');
+
+        return view('pages.show', compact('page', 'menus', 'resources', 'content'));
     }
 
     /**

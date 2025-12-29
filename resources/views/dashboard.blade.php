@@ -14,7 +14,7 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 sm:px-0">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 px-4 sm:px-0">
                 
                 <!-- Main Content (Active Borrowings) -->
                 <div class="lg:col-span-2 space-y-8">
@@ -146,14 +146,8 @@
                          </div>
                     </div>
 
-                    <!-- Helpful Links -->
-                     <div class="bg-gradient-to-br from-brand-600 to-emerald-600 p-6 rounded-3xl shadow-lg text-white">
-                         <h3 class="font-bold text-lg mb-2">Need Help?</h3>
-                         <p class="text-brand-100 text-sm mb-4 leading-relaxed">Check out our library guide or contact support for assistance.</p>
-                         <button disabled class="w-full py-3 bg-white/20 hover:bg-white/30 rounded-xl font-bold text-sm transition backdrop-blur-sm">
-                             Contact Librarian
-                         </button>
-                     </div>
+
+
                 </div>
 
             </div>
