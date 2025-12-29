@@ -20,21 +20,21 @@ class StaffProfileSeeder extends Seeder
 
         $staffMembers = [
             [
-                'name' => 'Alice Johnson',
+                'name' => 'Nash Roxas',
                 'role_text' => 'Head Librarian',
                 'bio' => 'Over 20 years of experience in library sciences. Dedicated to community outreach.',
                 'image' => $images[0],
                 'sort_order' => 1,
             ],
             [
-                'name' => 'Bob Smith',
+                'name' => 'Kart Mendoza',
                 'role_text' => 'Assistant Librarian',
                 'bio' => 'Passionate about digital archiving and modernizing library systems.',
                 'image' => $images[1],
                 'sort_order' => 2,
             ],
             [
-                'name' => 'Carol White',
+                'name' => 'Ahron Valenzuela',
                 'role_text' => 'Archivist',
                 'bio' => 'Expert in historical manuscripts and preservation techniques.',
                 'image' => $images[2],
