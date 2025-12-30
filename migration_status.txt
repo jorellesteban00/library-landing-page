@@ -1,0 +1,22 @@
+﻿
+   Illuminate\Database\QueryException 
+
+  SQLSTATE[42S02]: Base table or view not found: 1932 Table 'library_db.migrations' doesn't exist in engine (Connection: mysql, SQL: select `migration` from `migrations` order by `batch` asc, `migration` asc)
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:826
+    822Γûò                     $this->getName(), $query, $this->prepareBindings($bindings), $e
+    823Γûò                 );
+    824Γûò             }
+    825Γûò 
+  Γ₧£ 826Γûò             throw new QueryException(
+    827Γûò                 $this->getName(), $query, $this->prepareBindings($bindings), $e
+    828Γûò             );
+    829Γûò         }
+    830Γûò     }
+
+  1   vendor\laravel\framework\src\Illuminate\Database\Connection.php:406
+      PDOException::("SQLSTATE[42S02]: Base table or view not found: 1932 Table 'library_db.migrations' doesn't exist in engine")
+
+  2   vendor\laravel\framework\src\Illuminate\Database\Connection.php:406
+      PDO::prepare("select `migration` from `migrations` order by `batch` asc, `migration` asc")
+
