@@ -33,6 +33,8 @@ class BookController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|in:available,borrowed,reserved',
             'cover_image' => 'nullable|image|max:2048',
+            'total_quantity' => 'required|integer|min:1',
+            'available_quantity' => 'required|integer|min:0|lte:total_quantity',
         ]);
 
         if ($request->hasFile('cover_image')) {
@@ -59,6 +61,8 @@ class BookController extends Controller
             'description' => 'nullable|string',
             'status' => 'required|in:available,borrowed,reserved',
             'cover_image' => 'nullable|image|max:2048',
+            'total_quantity' => 'required|integer|min:1',
+            'available_quantity' => 'required|integer|min:0|lte:total_quantity',
         ]);
 
         if ($request->hasFile('cover_image')) {

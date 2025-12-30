@@ -1,5 +1,5 @@
 <x-librarian-layout>
-    <div class="p-8 bg-[#F8F7F4] min-h-screen">
+    <div class="p-8 bg-[#F8F7F4] min-h-screen" x-data="{ showReturnModal: false, returnUrl: '' }">
         
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
@@ -90,18 +90,33 @@
                                     </td>
                                     <td class="px-8 py-6">
                                         <div class="text-sm space-y-1">
-                                            <div class="flex items-center gap-2 text-gray-600">
-                                                <span class="text-xs uppercase tracking-wide text-gray-400 w-12">Issued</span>
-                                                <span class="font-medium">{{ $borrowing->borrowed_at->format('M d, Y') }}</span>
-                                            </div>
+                                            @if($borrowing->status === 'pending')
+                                                <div class="flex items-center gap-2 text-gray-600">
+                                                    <span class="text-xs uppercase tracking-wide text-gray-400 w-14">Requested</span>
+                                                    <span class="font-medium">{{ $borrowing->created_at->format('M d, Y') }}</span>
+                                                </div>
+                                            @else
+                                                <div class="flex items-center gap-2 text-gray-600">
+                                                    <span class="text-xs uppercase tracking-wide text-gray-400 w-14">Issued</span>
+                                                    <span class="font-medium">{{ $borrowing->borrowed_at?->format('M d, Y') ?? '-' }}</span>
+                                                </div>
+                                            @endif
                                             <div class="flex items-center gap-2 {{ $borrowing->due_date->isPast() && $borrowing->status === 'borrowed' ? 'text-red-600 font-bold' : 'text-gray-600' }}">
-                                                <span class="text-xs uppercase tracking-wide text-gray-400 w-12">Due</span>
+                                                <span class="text-xs uppercase tracking-wide text-gray-400 w-14">Due</span>
                                                 <span class="font-medium">{{ $borrowing->due_date->format('M d, Y') }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-8 py-6 text-center">
-                                         @if($borrowing->status === 'returned')
+                                         @if($borrowing->status === 'pending')
+                                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span> Pending
+                                            </span>
+                                        @elseif($borrowing->status === 'rejected')
+                                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> Rejected
+                                            </span>
+                                        @elseif($borrowing->status === 'returned')
                                             <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Returned
                                             </span>
@@ -119,15 +134,32 @@
                                         @endif
                                     </td>
                                     <td class="px-8 py-6 text-right">
-                                        @if($borrowing->status === 'borrowed')
-                                            <form action="{{ route('borrowings.return', $borrowing) }}" method="POST" onsubmit="return confirm('Confirm return of this book?')">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-green-100 text-green-600 hover:bg-green-50 hover:border-green-200 hover:text-green-700 font-bold text-sm rounded-xl transition-all shadow-sm">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                                    Mark Returned
-                                                </button>
-                                            </form>
+                                        @if($borrowing->status === 'pending')
+                                            <div class="flex items-center justify-end gap-2">
+                                                <form action="{{ route('staff.borrowings.approve', $borrowing) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-bold text-sm rounded-xl transition-all shadow-sm">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                                        Approve
+                                                    </button>
+                                                </form>
+                                                <form action="{{ route('staff.borrowings.reject', $borrowing) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-red-100 text-red-600 hover:bg-red-50 hover:border-red-200 font-bold text-sm rounded-xl transition-all shadow-sm">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                                        Reject
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @elseif($borrowing->status === 'borrowed')
+                                            <button 
+                                                @click="showReturnModal = true; returnUrl = '{{ route('borrowings.return', $borrowing) }}'"
+                                                class="inline-flex items-center gap-2 px-4 py-2 bg-white border-2 border-green-100 text-green-600 hover:bg-green-50 hover:border-green-200 hover:text-green-700 font-bold text-sm rounded-xl transition-all shadow-sm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                                Mark Returned
+                                            </button>
                                         @else
                                             <span class="text-gray-300">
                                                 <svg class="w-6 h-6 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -145,5 +177,61 @@
                 </div>
             @endif
         </div>
+
+
+    <!-- Return Book Modal -->
+    <div x-show="showReturnModal" 
+            style="background-color: rgba(0, 0, 0, 0.5); display: none;" 
+            class="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm"
+            x-show="showReturnModal"
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            x-cloak>
+        
+        <!-- Modal Panel -->
+        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full mx-4 transform transition-all"
+                @click.away="showReturnModal = false"
+                x-show="showReturnModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+            
+            <div class="flex items-center justify-center mb-6">
+                <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Confirm Return</h3>
+                <p class="text-gray-600 mb-8">Are you sure you want to mark this book as returned? The stock count will be updated immediately.</p>
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <button @click="showReturnModal = false" 
+                        class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    Cancel
+                </button>
+                
+                <form :action="returnUrl" method="POST" class="inline">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" 
+                            class="px-5 py-2.5 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-lg shadow-green-200 transition-all focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Confirm Return
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
 </x-librarian-layout>

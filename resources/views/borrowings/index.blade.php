@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Borrowed Books') }}
+            {{ __('My Book Requests & Loans') }}
         </h2>
     </x-slot>
 
@@ -52,6 +52,10 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @if($borrowing->status === 'returned')
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Returned</span>
+                                            @elseif($borrowing->status === 'pending')
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending Approval</span>
+                                            @elseif($borrowing->status === 'rejected')
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>
                                             @elseif($borrowing->due_date->isPast())
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Overdue</span>
                                             @else
@@ -66,8 +70,12 @@
                                                 >
                                                     Return
                                                 </button>
+                                            @elseif($borrowing->status === 'pending')
+                                                <span class="text-yellow-600 font-medium">Awaiting approval</span>
+                                            @elseif($borrowing->status === 'rejected')
+                                                <span class="text-gray-400">Request rejected</span>
                                             @else
-                                                <span class="text-gray-400">Returned {{ $borrowing->returned_at->format('M d') }}</span>
+                                                <span class="text-gray-400">Returned {{ $borrowing->returned_at?->format('M d') }}</span>
                                             @endif
                                         </td>
                                     </tr>

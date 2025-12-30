@@ -47,7 +47,7 @@ class BorrowingController extends Controller
     }
 
     /**
-     * Store a new borrowing.
+     * Store a new borrowing request.
      */
     public function store(Request $request)
     {
@@ -62,27 +62,25 @@ class BorrowingController extends Controller
             return back()->with('error', 'This book is no longer available.');
         }
 
-        // Check if user already has this book borrowed
+        // Check if user already has this book borrowed or pending
         $existingBorrow = Borrowing::where('user_id', auth()->id())
             ->where('book_id', $book->id)
-            ->where('status', 'borrowed')
+            ->whereIn('status', ['borrowed', 'pending'])
             ->exists();
 
         if ($existingBorrow) {
-            return back()->with('error', 'You already have this book borrowed.');
+            return back()->with('error', 'You already have a pending request or active borrow for this book.');
         }
 
         Borrowing::create([
             'user_id' => auth()->id(),
             'book_id' => $book->id,
             'due_date' => $validated['due_date'],
-            'status' => 'borrowed',
+            'status' => 'pending',
         ]);
 
-        $book->decrement('available_quantity');
-
         return redirect()->route('borrowings.index')
-            ->with('success', 'Book borrowed successfully! Due date: ' . Carbon::parse($validated['due_date'])->format('M d, Y'));
+            ->with('success', 'Borrow request submitted successfully! Please wait for admin approval.');
     }
 
     /**
@@ -115,5 +113,56 @@ class BorrowingController extends Controller
         }
 
         return view('borrowings.show', compact('borrowing'));
+    }
+
+    /**
+     * Approve a pending borrowing request.
+     */
+    public function approve(Borrowing $borrowing)
+    {
+        // Only staff/librarian can approve
+        if (!in_array(auth()->user()->role, ['librarian', 'staff'])) {
+            abort(403);
+        }
+
+        if ($borrowing->status !== 'pending') {
+            return back()->with('error', 'This request has already been processed.');
+        }
+
+        // Check if book is still available
+        if ($borrowing->book->available_quantity < 1) {
+            return back()->with('error', 'This book is no longer available.');
+        }
+
+        $borrowing->update([
+            'status' => 'borrowed',
+            'borrowed_at' => now(),
+        ]);
+
+        // Decrement available quantity
+        $borrowing->book->decrement('available_quantity');
+
+        return back()->with('success', 'Borrow request approved successfully!');
+    }
+
+    /**
+     * Reject a pending borrowing request.
+     */
+    public function reject(Borrowing $borrowing)
+    {
+        // Only staff/librarian can reject
+        if (!in_array(auth()->user()->role, ['librarian', 'staff'])) {
+            abort(403);
+        }
+
+        if ($borrowing->status !== 'pending') {
+            return back()->with('error', 'This request has already been processed.');
+        }
+
+        $borrowing->update([
+            'status' => 'rejected',
+        ]);
+
+        return back()->with('success', 'Borrow request rejected.');
     }
 }

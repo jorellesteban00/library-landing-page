@@ -126,8 +126,8 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-5">
-                                    <span class="text-gray-800 font-bold text-sm">1 / 3</span>
-                                    <!-- Hardcoded quantity as schema doesn't support multiple copies yet -->
+                                    <span class="text-gray-800 font-bold text-sm">{{ $book->available_quantity }} /
+                                        {{ $book->total_quantity }}</span>
                                 </td>
                                 <td class="px-4 py-5">
                                     @if($book->status === 'available')

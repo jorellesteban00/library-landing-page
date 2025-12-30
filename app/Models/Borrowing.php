@@ -65,6 +65,14 @@ class Borrowing extends Model
     }
 
     /**
+     * Scope for pending borrowing requests.
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    /**
      * Mark as returned.
      */
     public function markAsReturned(): void

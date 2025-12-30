@@ -87,14 +87,18 @@
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 mb-1">Total Copies <span
                                         class="text-red-500">*</span></label>
-                                <input type="number" name="visual_total_copies" value="1"
-                                    class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 text-sm">
+                                <input type="number" name="total_quantity" value="{{ old('total_quantity', 1) }}"
+                                    min="1"
+                                    class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 text-sm"
+                                    required>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 mb-1">Available Copies <span
                                         class="text-red-500">*</span></label>
-                                <input type="number" name="visual_available_copies" value="1"
-                                    class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 text-sm">
+                                <input type="number" name="available_quantity"
+                                    value="{{ old('available_quantity', 1) }}" min="0"
+                                    class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 text-sm"
+                                    required>
                             </div>
                         </div>
                     </div>
