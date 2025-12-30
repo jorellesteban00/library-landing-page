@@ -8,7 +8,7 @@
                     <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     Back to Dashboard
                 </a>
-                <span class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN PANEL</span>
+                <span class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">STAFF PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Manage Borrowings</h1>
                 <p class="text-gray-500 mt-2">Track issued books, process returns, and view history</p>
             </div>
