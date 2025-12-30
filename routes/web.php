@@ -59,6 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Borrowing Management for Staff/Librarian
         Route::get('/borrowings', [\App\Http\Controllers\BorrowingController::class, 'manage'])->name('borrowings.index');
+        Route::patch('/borrowings/{borrowing}/approve', [\App\Http\Controllers\BorrowingController::class, 'approve'])->name('borrowings.approve');
+        Route::patch('/borrowings/{borrowing}/reject', [\App\Http\Controllers\BorrowingController::class, 'reject'])->name('borrowings.reject');
     });
 
     // Librarian Only Management

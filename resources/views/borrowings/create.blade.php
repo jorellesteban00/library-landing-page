@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Confirm Borrowing') }}
+            {{ __('Request to Borrow') }}
         </h2>
     </x-slot>
 
@@ -43,7 +43,7 @@
 
                 <!-- Borrow Form -->
                 <div class="p-8 md:col-span-2">
-                    <h3 class="text-2xl font-black text-gray-900 mb-6 tracking-tight">Complete Borrowing</h3>
+                    <h3 class="text-2xl font-black text-gray-900 mb-6 tracking-tight">Request to Borrow</h3>
 
                     <form action="{{ route('borrowings.store') }}" method="POST" class="space-y-6">
                         @csrf
@@ -51,8 +51,8 @@
 
                         <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-6">
                             <p class="text-blue-800 text-sm font-medium">
-                                <span class="font-bold">Note:</span> You are about to borrow this book. Please select a
-                                return date below.
+                                <span class="font-bold">Note:</span> Your request will be sent to the library staff for
+                                approval. You will be notified once it's approved.
                             </p>
                         </div>
 
@@ -75,7 +75,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 13l4 4L19 7"></path>
                                 </svg>
-                                Confirm & Borrow
+                                Submit Request
                             </button>
                         </div>
                     </form>

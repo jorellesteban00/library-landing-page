@@ -95,7 +95,7 @@
                             </h2>
                             <div class="space-y-4">
                                 @forelse($recentBooks as $book)
-                                    <div class="flex gap-4 p-4 rounded-2xl bg-gray-50 hover:bg-white border border-transparent hover:border-gray-200 shadow-sm transition-all group">
+                                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 hover:bg-white border border-transparent hover:border-gray-200 shadow-sm transition-all group">
                                          <div class="w-16 h-24 bg-gray-200 rounded-lg overflow-hidden shrink-0 shadow-sm">
                                             @if($book->cover_image)
                                                 <img src="{{ asset('storage/' . $book->cover_image) }}" class="w-full h-full object-cover">
@@ -105,12 +105,12 @@
                                                 </div>
                                             @endif
                                         </div>
-                                        <div class="flex-1">
+                                        <div class="flex-1 min-w-0">
                                             <h3 class="font-bold text-gray-900 group-hover:text-brand-600 transition truncate">{{ $book->title }}</h3>
                                             <p class="text-sm text-gray-500 mb-2">{{ $book->author }}</p>
                                             <p class="text-xs text-gray-400 line-clamp-2">{{ Str::limit($book->description, 100) }}</p>
                                         </div>
-                                        <div class="self-center">
+                                        <div>
                                             <a href="{{ route('books.show', $book) }}" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 text-sm font-bold rounded-xl hover:bg-brand-50 hover:text-brand-700 hover:border-brand-200 transition">
                                                 View
                                             </a>

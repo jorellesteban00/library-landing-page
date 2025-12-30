@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // Librarian (formerly Admin)
         User::firstOrCreate(
-            ['email' => 'admin@library.com'],
+            ['email' => 'librarian@example.com'],
             [
                 'name' => 'Librarian',
-                'password' => bcrypt('admin123'),
+                'password' => bcrypt('password'),
                 'role' => 'librarian',
             ]
         );

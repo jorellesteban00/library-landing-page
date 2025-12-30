@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-8">
             <div>
                 <span
-                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
+                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
                     PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Books</h1>
             </div>
@@ -126,8 +126,8 @@
                                     </span>
                                 </td>
                                 <td class="px-4 py-5">
-                                    <span class="text-gray-800 font-bold text-sm">1 / 3</span>
-                                    <!-- Hardcoded quantity as schema doesn't support multiple copies yet -->
+                                    <span class="text-gray-800 font-bold text-sm">{{ $book->available_quantity }} /
+                                        {{ $book->total_quantity }}</span>
                                 </td>
                                 <td class="px-4 py-5">
                                     @if($book->status === 'available')

@@ -113,7 +113,7 @@
     <main class="flex-grow">
         <!-- Featured Image -->
         @if($news->image)
-            <div class="w-full h-80 md:h-96 overflow-hidden">
+            <div class="w-full h-64 md:h-80 overflow-hidden">
                 <img src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}"
                     class="w-full h-full object-cover">
             </div>
