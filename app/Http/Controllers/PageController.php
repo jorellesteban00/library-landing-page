@@ -179,7 +179,7 @@ class PageController extends Controller
     public function show(Page $page)
     {
         // Check if page is viewable
-        $canView = $page->isLive() || (auth()->check() && in_array(auth()->user()->role, ['librarian', 'staff']));
+        $canView = $page->isLive() || (auth()->check() && in_array(auth()->user()->role, ['librarian', 'staff', 'user']));
 
         if (!$canView) {
             abort(404);
