@@ -1,5 +1,5 @@
 <x-librarian-layout>
-    <div class="p-8 bg-[#F8F7F4] min-h-screen">
+    <div class="p-8 bg-[#F8F7F4] min-h-screen" x-data="{ showDeleteModal: false, deleteUrl: '' }">
 
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
@@ -149,6 +149,57 @@
                 </div>
             </div>
         </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div x-show="showDeleteModal" style="background-color: rgba(0, 0, 0, 0.5); display: none;"
+            class="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm"
+            x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+
+            <!-- Modal Panel -->
+            <div class="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full mx-4 transform transition-all"
+                @click.away="showDeleteModal = false" x-show="showDeleteModal"
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+                <div class="flex items-center justify-center mb-6">
+                    <div class="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Confirm Delete</h3>
+                    <p class="text-gray-600 mb-8">Are you sure you want to delete this page? Child pages will be moved
+                        to top level.</p>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button @click="showDeleteModal = false"
+                        class="px-5 py-2.5 text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300">
+                        Cancel
+                    </button>
+
+                    <form :action="deleteUrl" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="px-5 py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow-lg shadow-red-200 transition-all focus:outline-none focus:ring-2 focus:ring-red-500">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Sortable JS -->
