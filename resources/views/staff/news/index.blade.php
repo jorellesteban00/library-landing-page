@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-8">
             <div>
                 <span
-                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">STAFF
+                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
                     PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">News</h1>
             </div>
