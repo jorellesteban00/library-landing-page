@@ -58,7 +58,7 @@
                             <div class="relative">
                                 <select name="type" id="resource-type"
                                     class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 appearance-none cursor-pointer"
-                                    required>
+                                    style="background-image: none !important;" required>
                                     <option value="link" {{ old('type') === 'link' ? 'selected' : '' }}>External Link
                                     </option>
                                     <option value="video" {{ old('type') === 'video' ? 'selected' : '' }}>Video URL
@@ -84,7 +84,9 @@
 
                     <!-- URL Field -->
                     <div id="url-field">
-                        <label for="url" class="block text-sm font-bold text-gray-700 mb-2">External URL</label>
+                        <label for="url" class="block text-sm font-bold text-gray-700 mb-2">External URL
+                            <span class="text-red-500">*</span>
+                        </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-400 sm:text-sm">https://</span>
@@ -97,7 +99,9 @@
 
                     <!-- File Upload Field -->
                     <div id="file-field" style="display: none;">
-                        <label class="block text-sm font-bold text-gray-700 mb-2">Upload File</label>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Upload File
+                            <span class="text-red-500">*</span>
+                        </label>
                         <div class="w-full">
                             <label for="file"
                                 class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-brand-300 transition group">
