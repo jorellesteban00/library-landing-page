@@ -136,8 +136,8 @@ php artisan serve
 Visit `http://127.0.0.1:8000`
 
 ### Default Admin Credentials
-- **Email**: admin@library.com
-- **Password**: admin123
+- **Email**: librarian@example.com
+- **Password**: password
 
 **⚠️ IMPORTANT**: Change the default password immediately after first login!
 
