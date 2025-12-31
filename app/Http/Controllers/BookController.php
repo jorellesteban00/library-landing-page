@@ -11,9 +11,21 @@ use Illuminate\View\View;
 
 class BookController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $books = Book::orderBy('sort_order')->orderBy('created_at', 'desc')->get();
+        $query = Book::orderBy('sort_order')->orderBy('created_at', 'desc');
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('author', 'like', "%{$search}%")
+                    ->orWhere('isbn', 'like', "%{$search}%")
+                    ->orWhere('genre', 'like', "%{$search}%");
+            });
+        }
+
+        $books = $query->get();
         $activeLoansCount = Borrowing::active()->count();
         return view('staff.books.index', compact('books', 'activeLoansCount'));
     }
@@ -97,5 +109,31 @@ class BookController extends Controller
     public function show(Book $book): View
     {
         return view('books.show', compact('book'));
+    }
+
+    public function catalogue(Request $request): View
+    {
+        $query = Book::where('status', 'available');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('author', 'like', "%{$search}%")
+                    ->orWhere('isbn', 'like', "%{$search}%")
+                    ->orWhere('genre', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->has('genre') && $request->genre != '') {
+            $query->where('genre', $request->genre);
+        }
+
+        $books = $query->orderBy('created_at', 'desc')->paginate(12);
+
+        // Get all unique genres for the filter dropdown
+        $genres = Book::select('genre')->distinct()->whereNotNull('genre')->pluck('genre');
+
+        return view('books.catalogue', compact('books', 'genres'));
     }
 }

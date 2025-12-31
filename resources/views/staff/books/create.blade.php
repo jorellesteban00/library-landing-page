@@ -74,9 +74,26 @@
                             <option value="">Select Category</option>
                             <option value="Fiction">Fiction</option>
                             <option value="Non-Fiction">Non-Fiction</option>
-                            <option value="Science">Science</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Young Adult">Young Adult</option>
+                            <option value="Children's">Children's</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Biography">Biography</option>
                             <option value="History">History</option>
+                            <option value="Science">Science</option>
                             <option value="Technology">Technology</option>
+                            <option value="Programming">Programming</option>
+                            <option value="Educational">Educational</option>
+                            <option value="Literature">Literature</option>
+                            <option value="Philippine Literature">Philippine Literature</option>
+                            <option value="Graphic Novel">Graphic Novel</option>
+                            <option value="Self-Help">Self-Help</option>
                         </select>
                     </div>
 
@@ -116,17 +133,46 @@
                         <!-- Force available for now as schema is limited -->
                     </div>
 
-                    <!-- Cover Image -->
+
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">Cover Image</h3>
+
+                        <!-- Image Preview -->
+                        <div id="image-preview-container" class="mb-4 hidden">
+                            <img id="cover-preview" src="#" alt="Cover Preview"
+                                class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm">
+                        </div>
+
                         <label
                             class="block w-full cursor-pointer bg-brand-50 hover:bg-brand-100 border border-brand-200 rounded-xl p-4 transition group text-center">
                             <span class="text-brand-700 font-bold text-sm block mb-1">Choose File</span>
-                            <span class="text-xs text-gray-500 block">No file chosen</span>
-                            <input type="file" name="cover_image" class="hidden">
+                            <span id="file-name" class="text-xs text-gray-500 block">No file chosen</span>
+                            <input type="file" name="cover_image" id="cover_image" class="hidden" accept="image/*">
                         </label>
-                        <p class="text-xs text-gray-400 mt-2">Upload new image to replace</p>
+                        <p class="text-xs text-gray-400 mt-2">Upload a cover image</p>
                     </div>
+
+                    <script>
+                        document.getElementById('cover_image').addEventListener('change', function (e) {
+                            const file = e.target.files[0];
+                            const previewContainer = document.getElementById('image-preview-container');
+                            const previewImage = document.getElementById('cover-preview');
+                            const fileName = document.getElementById('file-name');
+
+                            if (file) {
+                                fileName.textContent = file.name;
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    previewImage.src = e.target.result;
+                                    previewContainer.classList.remove('hidden');
+                                }
+                                reader.readAsDataURL(file);
+                            } else {
+                                fileName.textContent = 'No file chosen';
+                                previewContainer.classList.add('hidden');
+                            }
+                        });
+                    </script>
 
                 </div>
             </div>

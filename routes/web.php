@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Member Borrowing Routes (all authenticated users)
+    Route::get('/books', [\App\Http\Controllers\BookController::class, 'catalogue'])->name('books.catalogue');
     Route::get('/my-borrowings', [\App\Http\Controllers\BorrowingController::class, 'index'])->name('borrowings.index');
     Route::get('/borrow/{book}', [\App\Http\Controllers\BorrowingController::class, 'create'])->name('borrowings.create');
     Route::post('/borrow', [\App\Http\Controllers\BorrowingController::class, 'store'])->name('borrowings.store');
@@ -59,8 +60,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Borrowing Management for Staff/Librarian
         Route::get('/borrowings', [\App\Http\Controllers\BorrowingController::class, 'manage'])->name('borrowings.index');
+        Route::get('/borrowings/pending', [\App\Http\Controllers\BorrowingController::class, 'pending'])->name('borrowings.pending');
         Route::patch('/borrowings/{borrowing}/approve', [\App\Http\Controllers\BorrowingController::class, 'approve'])->name('borrowings.approve');
         Route::patch('/borrowings/{borrowing}/reject', [\App\Http\Controllers\BorrowingController::class, 'reject'])->name('borrowings.reject');
+        Route::delete('/borrowings/{borrowing}', [\App\Http\Controllers\BorrowingController::class, 'destroy'])->name('borrowings.destroy');
+        Route::delete('/borrowings-bulk', [\App\Http\Controllers\BorrowingController::class, 'bulkDestroy'])->name('borrowings.bulk-destroy');
     });
 
     // Librarian Only Management

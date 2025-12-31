@@ -18,6 +18,17 @@
                 
                 <!-- Main Content (Active Borrowings) -->
                 <div class="lg:col-span-2 space-y-8">
+                    <!-- Library Catalogue Banner -->
+                     <div class="bg-brand-600 rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm text-white">
+                        <div>
+                            <h2 class="text-2xl font-black mb-2">Explore Our Collection</h2>
+                            <p class="text-brand-100 font-medium">Browse thousands of books, find your next read, and check availability.</p>
+                        </div>
+                        <a href="{{ route('books.catalogue') }}" class="px-6 py-3 bg-white text-brand-700 font-bold rounded-xl shadow-lg hover:bg-brand-50 transition-colors flex items-center gap-2 whitespace-nowrap">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            View All Books
+                        </a>
+                    </div>
                     <div class="bg-white overflow-hidden shadow-sm rounded-3xl border border-gray-100">
                         <div class="p-8">
                             <div class="flex items-center justify-between mb-6">
@@ -77,7 +88,7 @@
                                          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                                      </div>
                                      <p class="text-gray-500 font-medium mb-4">You have no active loans.</p>
-                                     <a href="{{ route('home') }}#books" class="inline-flex items-center px-4 py-2 bg-brand-600 text-white font-bold rounded-xl text-sm shadow-md hover:bg-brand-700 transition">
+                                     <a href="{{ route('books.catalogue') }}" class="inline-flex items-center px-4 py-2 bg-brand-600 text-white font-bold rounded-xl text-sm shadow-md hover:bg-brand-700 transition">
                                          Browse Books
                                      </a>
                                 </div>
@@ -145,6 +156,8 @@
                              </a>
                          </div>
                     </div>
+
+
 
 
 

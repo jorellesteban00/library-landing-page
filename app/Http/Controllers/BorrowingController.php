@@ -25,13 +25,52 @@ class BorrowingController extends Controller
     /**
      * Display all borrowings for staff/librarian.
      */
-    public function manage()
+    public function manage(Request $request)
     {
-        $borrowings = Borrowing::with(['user', 'book'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
+        $query = Borrowing::with(['user', 'book']);
+
+        // Filter by status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by search (user name, email, or book title)
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($userQuery) use ($search) {
+                    $userQuery->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                })->orWhereHas('book', function ($bookQuery) use ($search) {
+                    $bookQuery->where('title', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // Filter by date range
+        if ($request->has('date_from') && $request->date_from != '') {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+        if ($request->has('date_to') && $request->date_to != '') {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $borrowings = $query->orderBy('created_at', 'desc')->paginate(15)->withQueryString();
 
         return view('staff.borrowings.index', compact('borrowings'));
+    }
+
+    /**
+     * Display pending borrowing requests for staff/librarian.
+     */
+    public function pending()
+    {
+        $borrowings = Borrowing::with(['user', 'book'])
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'asc')
+            ->paginate(15);
+
+        return view('staff.borrowings.pending', compact('borrowings'));
     }
 
     /**
@@ -164,5 +203,42 @@ class BorrowingController extends Controller
         ]);
 
         return back()->with('success', 'Borrow request rejected.');
+    }
+
+    /**
+     * Delete a borrowing record from history.
+     */
+    public function destroy(Borrowing $borrowing)
+    {
+        // Only librarian can delete borrowing history
+        if (auth()->user()->role !== 'librarian') {
+            abort(403);
+        }
+
+        $borrowing->delete();
+
+        return back()->with('success', 'Borrowing record deleted successfully.');
+    }
+
+    /**
+     * Delete multiple borrowing records from history.
+     */
+    public function bulkDestroy(Request $request)
+    {
+        // Only librarian can delete borrowing history
+        if (auth()->user()->role !== 'librarian') {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'exists:borrowings,id',
+        ]);
+
+        Borrowing::whereIn('id', $validated['ids'])->delete();
+
+        $count = count($validated['ids']);
+
+        return back()->with('success', "{$count} borrowing record(s) deleted successfully.");
     }
 }

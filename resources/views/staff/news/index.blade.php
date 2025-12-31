@@ -24,16 +24,30 @@
             <!-- Search and Filters -->
             <div class="flex justify-between items-center gap-4 mb-6">
                 <div class="flex-1 max-w-md">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </span>
-                        <input type="text" placeholder="Search news..."
-                            class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition bg-gray-50 text-sm">
-                    </div>
+                    <form action="{{ route('staff.news.index') }}" method="GET">
+                        <div class="relative flex gap-2">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </span>
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                placeholder="Search news..."
+                                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition bg-gray-50 text-sm">
+                            <button type="submit"
+                                class="px-4 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl transition text-sm">
+                                Search
+                            </button>
+                            @if(request('search'))
+                                <a href="{{ route('staff.news.index') }}"
+                                    class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl transition text-sm">
+                                    Clear
+                                </a>
+                            @endif
+                        </div>
+                    </form>
                 </div>
                 <div class="flex items-center gap-3">
                     <a href="{{ route('staff.news.create') }}"

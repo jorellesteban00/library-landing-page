@@ -24,19 +24,33 @@
             <!-- Search and Action Buttons -->
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
                 <div class="flex-1 w-full md:max-w-md">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </span>
-                        <input type="text" placeholder="Search books..."
-                            class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition bg-gray-50">
-                    </div>
+                    <form action="{{ route('staff.books.index') }}" method="GET">
+                        <div class="relative flex gap-2">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </span>
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                placeholder="Search books..."
+                                class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition bg-gray-50">
+                            <button type="submit"
+                                class="px-4 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl transition">
+                                Search
+                            </button>
+                            @if(request('search'))
+                                <a href="{{ route('staff.books.index') }}"
+                                    class="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl transition">
+                                    Clear
+                                </a>
+                            @endif
+                        </div>
+                    </form>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button
+                    <a href="{{ route('staff.borrowings.pending') }}"
                         class="px-5 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-xl transition shadow-sm flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -44,7 +58,7 @@
                             </path>
                         </svg>
                         Pending Requests
-                    </button>
+                    </a>
                     <a href="{{ route('staff.borrowings.index') }}"
                         class="px-5 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl transition shadow-sm flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

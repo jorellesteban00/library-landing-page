@@ -11,9 +11,19 @@ class ResourceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $resources = Resource::ordered()->paginate(15);
+        $query = Resource::ordered();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $resources = $query->paginate(15);
         return view('staff.resources.index', compact('resources'));
     }
 

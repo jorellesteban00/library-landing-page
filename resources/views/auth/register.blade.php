@@ -33,12 +33,12 @@
             <x-input-label for="password" :value="__('Password')" class="text-gray-600 font-medium" />
             <div class="relative mt-2" x-data="{ show: false }">
                 <x-text-input id="password"
-                    class="block w-full rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 py-3 pr-10"
+                    class="block w-full rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 py-3 pr-12"
                     type="password" x-bind:type="show ? 'text' : 'password'" name="password" required
                     autocomplete="new-password" placeholder="Create a strong password" />
 
                 <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-brand-500 transition-colors focus:outline-none cursor-pointer z-10">
+                    class="absolute inset-y-0 right-2 pr-3 flex items-center text-gray-400 hover:text-brand-500 transition-colors focus:outline-none cursor-pointer z-10">
                     <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -61,12 +61,12 @@
                 class="text-gray-600 font-medium" />
             <div class="relative mt-2" x-data="{ show: false }">
                 <x-text-input id="password_confirmation"
-                    class="block w-full rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 py-3 pr-10"
+                    class="block w-full rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 py-3 pr-12"
                     type="password" x-bind:type="show ? 'text' : 'password'" name="password_confirmation" required
                     autocomplete="new-password" placeholder="Confirm your password" />
 
                 <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-brand-500 transition-colors focus:outline-none cursor-pointer z-10">
+                    class="absolute inset-y-0 right-2 pr-3 flex items-center text-gray-400 hover:text-brand-500 transition-colors focus:outline-none cursor-pointer z-10">
                     <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"

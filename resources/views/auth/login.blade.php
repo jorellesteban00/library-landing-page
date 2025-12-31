@@ -55,12 +55,12 @@
                     </svg>
                 </div>
                 <x-text-input id="password"
-                    class="block w-full pl-11 pr-10 py-3.5 border-gray-200 bg-gray-50/50 focus:bg-white transition-all shadow-sm"
+                    class="block w-full pl-11 pr-12 py-3.5 border-gray-200 bg-gray-50/50 focus:bg-white transition-all shadow-sm"
                     type="password" x-bind:type="show ? 'text' : 'password'" name="password" required
                     autocomplete="current-password" placeholder="••••••••" />
 
                 <button type="button" @click="show = !show"
-                    class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-brand-500 transition-colors focus:outline-none cursor-pointer z-10">
+                    class="absolute inset-y-0 right-2 pr-3 flex items-center text-gray-400 hover:text-brand-500 transition-colors focus:outline-none cursor-pointer z-10">
                     <!-- Eye Icon (Show) -->
                     <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">

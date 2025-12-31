@@ -71,10 +71,33 @@
                         <select name="genre" id="genre"
                             class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50">
                             <option value="">Select Category</option>
-                            @foreach(['Fiction', 'Non-Fiction', 'Science', 'History', 'Technology'] as $cat)
-                                <option value="{{ $cat }}" {{ (old('genre', $book->genre) == $cat) ? 'selected' : '' }}>
-                                    {{ $cat }}
-                                </option>
+                            @foreach([
+                                    'Fiction',
+                                    'Non-Fiction',
+                                    'Mystery',
+                                    'Thriller',
+                                    'Science Fiction',
+                                    'Fantasy',
+                                    'Adventure',
+                                    'Romance',
+                                    'Horror',
+                                    'Young Adult',
+                                    'Children\'s',
+                                    'Finance',
+                                    'Biography',
+                                    'History',
+                                    'Science',
+                                    'Technology',
+                                    'Programming',
+                                    'Educational',
+                                    'Literature',
+                                    'Philippine Literature',
+                                    'Graphic Novel',
+                                    'Self-Help'
+                                ] as $cat)
+                                                <option value="{{ $cat }}" {{ (old('genre', $book->genre) == $cat) ? 'selected' : '' }}>
+                                                    {{ $cat }}
+                                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -86,7 +109,11 @@
                             <div>
                                 <label class="block text-xs font-bold text-gray-500 mb-1">Total Copies <span
                                         class="text-red-500">*</span></label>
-                                <input type="number" name="total_quantity"
+
+
+                               
+                                                              
+                                                               <input type="number" name="total_quantity"
                                     value="{{ old('total_quantity', $book->total_quantity ?? 1) }}" min="1"
                                     class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 text-sm"
                                     required>
@@ -118,21 +145,45 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">Cover Image</h3>
 
-                        @if($book->cover_image)
-                            <div class="mb-4">
-                                <p class="text-xs font-bold text-gray-400 mb-2">Current Cover:</p>
-                                <img src="{{ asset('storage/' . $book->cover_image) }}"
-                                    class="w-full h-48 object-cover rounded-xl border border-gray-100">
-                            </div>
-                        @endif
+                        <!-- Image Display/Preview -->
+                        <div id="preview-container" class="mb-4 {{ $book->cover_image ? '' : 'hidden' }}">
+                            <p class="text-xs font-bold text-gray-400 mb-2" id="preview-label">
+                                {{ $book->cover_image ? 'Current Cover:' : 'New Cover Preview:' }}
+                            </p>
+                            <img id="cover-preview"
+                                src="{{ $book->cover_image ? asset('storage/' . $book->cover_image) : '#' }}"
+                                class="w-full h-48 object-cover rounded-xl border border-gray-100 shadow-sm">
+                        </div>
 
                         <label
                             class="block w-full cursor-pointer bg-brand-50 hover:bg-brand-100 border border-brand-200 rounded-xl p-4 transition group text-center">
                             <span class="text-brand-700 font-bold text-sm block mb-1">Change File</span>
-                            <span class="text-xs text-gray-500 block">No file chosen</span>
-                            <input type="file" name="cover_image" class="hidden">
+                            <span id="file-name" class="text-xs text-gray-500 block">No file chosen</span>
+                            <input type="file" name="cover_image" id="cover_image" class="hidden" accept="image/*">
                         </label>
+                        <p class="text-xs text-gray-400 mt-2">Upload new image to replace</p>
                     </div>
+
+                    <script>
+                        document.getElementById('cover_image').addEventListener('change', function (e) {
+                            const file = e.target.files[0];
+                            const previewContainer = document.getElementById('preview-container');
+                            const previewImage = document.getElementById('cover-preview');
+                            const previewLabel = document.getElementById('preview-label');
+                            const fileName = document.getElementById('file-name');
+
+                            if (file) {
+                                fileName.textContent = file.name;
+                                const reader = new FileReader();
+                                reader.onload = function (e) {
+                                    previewImage.src = e.target.result;
+                                    previewLabel.textContent = 'New Cover Preview:';
+                                    previewContainer.classList.remove('hidden');
+                                }
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    </script>
 
                     <!-- Delete Book -->
                     <!-- Danger Zone -->

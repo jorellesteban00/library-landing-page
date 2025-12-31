@@ -10,9 +10,19 @@ use Illuminate\View\View;
 
 class NewsController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $newsItems = NewsItem::latest()->get(); // Fetch all news items, newest first
+        $query = NewsItem::latest();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
+        $newsItems = $query->get();
         return view('staff.news.index', compact('newsItems'));
     }
 
