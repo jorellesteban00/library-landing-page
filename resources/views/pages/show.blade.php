@@ -24,7 +24,8 @@
     </style>
 </head>
 
-<body class="bg-[#FDFCF8] text-gray-800 antialiased font-sans flex flex-col min-h-screen">
+<body class="bg-[#FDFCF8] text-gray-800 antialiased font-sans flex flex-col min-h-screen"
+    x-data="{ showSuccessModal: false }" @page-updated.window="showSuccessModal = true">
 
     <!-- Navigation -->
     <nav class="w-full py-6 px-6 md:px-12 bg-[#FDFCF8] z-50 border-b border-gray-100">
@@ -326,8 +327,8 @@
                                             // Turn off edit mode
                                             toggleBtn.click();
 
-                                            // Show success toast
-                                            alert('Page updated successfully!');
+                                            // Show success modal
+                                            window.dispatchEvent(new CustomEvent('page-updated'));
                                         } else {
                                             alert('Failed to save content. Please try again.');
                                         }
@@ -472,6 +473,44 @@
             </div>
         </div>
     </footer>
+
+    </footer>
+
+    <!-- Success Modal -->
+    <div x-show="showSuccessModal" style="background-color: rgba(0, 0, 0, 0.5); display: none;"
+        class="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm"
+        x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+
+        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full mx-4 transform transition-all"
+            @click.away="showSuccessModal = false" x-show="showSuccessModal" x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
+            <div class="flex items-center justify-center mb-6">
+                <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Success!</h3>
+                <p class="text-gray-600 mb-8">Page updated successfully!</p>
+            </div>
+
+            <div class="flex justify-center">
+                <button @click="showSuccessModal = false"
+                    class="px-5 py-2.5 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow-lg shadow-green-200 transition-all focus:outline-none focus:ring-2 focus:ring-green-500 w-full">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
 
 </body>
 
