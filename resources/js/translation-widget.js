@@ -21,7 +21,7 @@ class TranslationWidget {
         const widgetHTML = `
             <div id="translation-widget" class="fixed bottom-4 right-4 z-50">
                 <!-- Chat Button -->
-                <button id="translation-btn" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg transition duration-200 flex items-center justify-center w-14 h-14" title="Translate selected text">
+                <button id="translation-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full p-3 shadow-lg transition duration-200 flex items-center justify-center w-14 h-14" title="Translate selected text">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
                     </svg>
@@ -38,19 +38,19 @@ class TranslationWidget {
                         </button>
                     </div>
 
-                    <textarea id="translation-input" class="w-full border border-gray-300 rounded p-2 mb-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent" rows="3" placeholder="Enter text to translate..."></textarea>
+                    <textarea id="translation-input" class="w-full border border-gray-300 rounded p-2 mb-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent" rows="3" placeholder="Enter text to translate..."></textarea>
 
-                    <button id="translate-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded transition duration-200 mb-3">
+                    <button id="translate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded transition duration-200 mb-3">
                         Translate
                     </button>
 
-                    <div id="translation-result" class="hidden bg-blue-50 border border-blue-200 rounded p-3 text-sm">
+                    <div id="translation-result" class="hidden bg-emerald-50 border border-emerald-200 rounded p-3 text-sm">
                         <p class="text-gray-600 font-medium mb-2">Translation:</p>
-                        <p id="translation-output" class="text-blue-900 font-semibold"></p>
+                        <p id="translation-output" class="text-emerald-900 font-semibold"></p>
                     </div>
 
                     <div id="translation-loading" class="hidden flex items-center justify-center py-3">
-                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                        <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-emerald-600"></div>
                         <span class="ml-2 text-sm text-gray-600">Translating...</span>
                     </div>
 
@@ -126,18 +126,18 @@ class TranslationWidget {
                 target_language: 'tl'
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                this.showResult(data.translated);
-            } else {
-                this.showError(data.error || 'Translation failed');
-            }
-        })
-        .catch(error => {
-            console.error('Translation error:', error);
-            this.showError('Error translating text');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    this.showResult(data.translated);
+                } else {
+                    this.showError(data.error || 'Translation failed');
+                }
+            })
+            .catch(error => {
+                console.error('Translation error:', error);
+                this.showError('Error translating text');
+            });
     }
 
     showLoading() {

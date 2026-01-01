@@ -11,8 +11,11 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800|playfair-display:700i&display=swap"
         rel="stylesheet" />
 
+    <!-- CSRF Token for API calls -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Vite Assets -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/translation-widget.js'])
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
     <style>
