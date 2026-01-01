@@ -114,54 +114,32 @@
                 </div>
             @else
                 {{-- Bulk Delete Button - Only for librarians --}}
-                @if(Auth::user()->role === 'librarian')
-                    <div class="px-6 py-3 border-b border-gray-100 bg-white" x-show="selectedIds.length > 0" x-cloak>
-                        <div class="flex items-center gap-4">
-                            <span class="text-sm text-gray-600">
-                                <span class="font-bold text-brand-600" x-text="selectedIds.length"></span> item(s) selected
-                            </span>
-                            <button @click="showBulkDeleteModal = true" 
-                                class="inline-flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold text-sm rounded-xl transition-all shadow-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                </svg>
-                                Delete Selected
-                            </button>
-                        </div>
-                    </div>
-                @endif
+
                 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-100">
-                                @if(Auth::user()->role === 'librarian')
-                                    <th class="px-4 py-5 w-12">
-                                        <input type="checkbox" 
-                                            x-model="selectAll" 
-                                            @change="toggleSelectAll()"
-                                            class="w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500 cursor-pointer">
-                                    </th>
-                                @endif
+
                                 <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Member</th>
                                 <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Book Details</th>
                                 <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Dates</th>
                                 <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Status</th>
                                 <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                                @if(Auth::user()->role === 'librarian')
+                                    <th class="px-4 py-5 text-right whitespace-nowrap w-32">
+                                        <button @click="if(selectAll) { selectAll = false; toggleSelectAll(); } else { selectAll = true; toggleSelectAll(); showBulkDeleteModal = true; }"
+                                            class="inline-flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg transition-all shadow-sm whitespace-nowrap">
+                                            Delete All
+                                        </button>
+                                    </th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             @foreach($borrowings as $borrowing)
                                 <tr class="hover:bg-gray-50/50 transition-colors group">
-                                    @if(Auth::user()->role === 'librarian')
-                                        <td class="px-4 py-6">
-                                            <input type="checkbox" 
-                                                value="{{ $borrowing->id }}"
-                                                class="borrowing-checkbox w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500 cursor-pointer"
-                                                x-bind:checked="isSelected('{{ $borrowing->id }}')"
-                                                @click="toggleSelection('{{ $borrowing->id }}')">
-                                        </td>
-                                    @endif
+
                                     <td class="px-8 py-6">
                                         <div class="flex items-center gap-4">
                                             <div class="w-10 h-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold shrink-0">
@@ -280,6 +258,15 @@
                                             @endif
                                         </div>
                                     </td>
+                                    @if(Auth::user()->role === 'librarian')
+                                        <td class="px-4 py-6 text-center">
+                                            <input type="checkbox" 
+                                                value="{{ $borrowing->id }}"
+                                                class="borrowing-checkbox w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500 cursor-pointer"
+                                                x-bind:checked="isSelected('{{ $borrowing->id }}')"
+                                                @click="toggleSelection('{{ $borrowing->id }}')">
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

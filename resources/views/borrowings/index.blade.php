@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('My Book Requests & Loans') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('My Book Requests & Loans') }}
+            </h2>
+            <a href="{{ route('books.catalogue') }}" class="inline-flex items-center px-4 py-2 bg-brand-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-brand-700 active:bg-brand-900 focus:outline-none focus:border-brand-900 focus:ring ring-brand-300 disabled:opacity-25 transition ease-in-out duration-150 shadow-sm hover:shadow-md">
+                {{ __('Browse Books') }}
+            </a>
+        </div>
     </x-slot>
 
     <div class="py-12" x-data="{ showReturnModal: false, returnUrl: '' }">

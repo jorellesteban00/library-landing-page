@@ -28,7 +28,7 @@ class TranslationWidget {
                 </button>
 
                 <!-- Translation Modal -->
-                <div id="translation-modal" class="hidden absolute bottom-20 right-0 w-80 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
+                <div id="translation-modal" class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-lg shadow-xl border border-gray-200 p-4">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold text-gray-800">Translate to Tagalog</h3>
                         <button id="close-modal" class="text-gray-500 hover:text-gray-700">
@@ -38,15 +38,32 @@ class TranslationWidget {
                         </button>
                     </div>
 
-                    <textarea id="translation-input" class="w-full border border-gray-300 rounded p-2 mb-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent" rows="3" placeholder="Enter text to translate..."></textarea>
+                    <div class="mb-1">
+                        <textarea id="translation-input" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none" rows="5" maxlength="5000" placeholder="Enter text to translate (words, phrases, or sentences)..."></textarea>
+                        <div class="flex justify-between items-center mt-1 mb-2">
+                            <span class="text-xs text-gray-400">Supports single words, phrases, and full sentences</span>
+                            <span id="char-count" class="text-xs text-gray-400">0 / 5000</span>
+                        </div>
+                    </div>
 
-                    <button id="translate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded transition duration-200 mb-3">
+                    <button id="translate-btn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded transition duration-200 mb-3 flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+                        </svg>
                         Translate
                     </button>
 
-                    <div id="translation-result" class="hidden bg-emerald-50 border border-emerald-200 rounded p-3 text-sm">
-                        <p class="text-gray-600 font-medium mb-2">Translation:</p>
-                        <p id="translation-output" class="text-emerald-900 font-semibold"></p>
+                    <div id="translation-result" class="hidden bg-emerald-50 border border-emerald-200 rounded p-3 text-sm max-h-40 overflow-y-auto">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-gray-600 font-medium">Translation:</p>
+                            <button id="copy-btn" class="text-emerald-600 hover:text-emerald-800 text-xs flex items-center gap-1" title="Copy translation">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                Copy
+                            </button>
+                        </div>
+                        <p id="translation-output" class="text-emerald-900 font-semibold leading-relaxed"></p>
                     </div>
 
                     <div id="translation-loading" class="hidden flex items-center justify-center py-3">
@@ -68,12 +85,15 @@ class TranslationWidget {
         const closeBtn = document.getElementById('close-modal');
         const translateBtn = document.getElementById('translate-btn');
         const input = document.getElementById('translation-input');
+        const charCount = document.getElementById('char-count');
+        const copyBtn = document.getElementById('copy-btn');
 
         // Toggle modal
         btn.addEventListener('click', () => {
             modal.classList.toggle('hidden');
             if (!modal.classList.contains('hidden')) {
                 input.focus();
+                this.updateCharCount();
             }
         });
 
@@ -87,7 +107,12 @@ class TranslationWidget {
             this.performTranslation();
         });
 
-        // Translate on Enter key
+        // Update character count on input
+        input.addEventListener('input', () => {
+            this.updateCharCount();
+        });
+
+        // Translate on Enter key (Shift+Enter for new line)
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -100,8 +125,45 @@ class TranslationWidget {
             this.selectedText = window.getSelection().toString().trim();
             if (this.selectedText) {
                 input.value = this.selectedText;
+                this.updateCharCount();
             }
         });
+
+        // Copy translation to clipboard
+        copyBtn.addEventListener('click', () => {
+            const output = document.getElementById('translation-output').textContent;
+            if (output) {
+                navigator.clipboard.writeText(output).then(() => {
+                    // Show brief feedback
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = `
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Copied!
+                    `;
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                    }, 2000);
+                });
+            }
+        });
+    }
+
+    updateCharCount() {
+        const input = document.getElementById('translation-input');
+        const charCount = document.getElementById('char-count');
+        const length = input.value.length;
+        charCount.textContent = `${length} / 5000`;
+
+        // Change color if near limit
+        if (length > 4500) {
+            charCount.classList.remove('text-gray-400');
+            charCount.classList.add('text-red-500');
+        } else {
+            charCount.classList.remove('text-red-500');
+            charCount.classList.add('text-gray-400');
+        }
     }
 
     performTranslation() {
