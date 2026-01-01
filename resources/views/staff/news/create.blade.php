@@ -28,17 +28,20 @@
             <!-- Header -->
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <a href="{{ route('staff.news.index') }}"
-                        class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm mb-4 group">
-                        <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                            </path>
-                        </svg>
-                        Back to News
-                    </a>
+                    <div class="mb-4">
+                        <a href="{{ route('staff.news.index') }}"
+                            class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm group">
+                            <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7">
+                                </path>
+                            </svg>
+                            Back to News
+                        </a>
+                    </div>
                     <span
-                        class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
+                        class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
                         PANEL</span>
                     <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Create News Article</h1>
                 </div>

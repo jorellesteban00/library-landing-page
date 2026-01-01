@@ -17,8 +17,7 @@
                         Back to Resources
                     </a>
                     <span
-                        class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
-                        PANEL</span>
+                        class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF PANEL</span>
                     <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Edit Resource</h1>
                     <p class="text-gray-500 mt-2">Update information for: <span
                             class="font-medium text-gray-700">{{ $resource->title }}</span></p>

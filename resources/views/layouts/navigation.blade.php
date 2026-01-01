@@ -99,20 +99,14 @@
                         <div class="border-t border-gray-100 my-1"></div>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault(); this.closest('form').submit();"
-                                class="text-red-600 hover:text-red-700 hover:bg-red-50">
-                                <div class="flex items-center gap-2 font-semibold">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 16l4-4m0 0l-4-4m4 4H3"></path>
-                                    </svg>
-                                    {{ __('Sign Out') }}
-                                </div>
-                            </x-dropdown-link>
-                        </form>
+                        <button type="button" @click="$dispatch('open-logout-modal')"
+                            class="block w-full px-4 py-2 text-start text-sm leading-5 text-red-600 hover:text-red-700 hover:bg-red-50 focus:outline-none focus:bg-red-50 transition duration-150 ease-in-out flex items-center gap-2 font-semibold">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H3"></path>
+                            </svg>
+                            {{ __('Sign Out') }}
+                        </button>
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -162,13 +156,10 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+                <button type="button" @click="$dispatch('open-logout-modal')"
+                    class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                    {{ __('Log Out') }}
+                </button>
             </div>
         </div>
     </div>

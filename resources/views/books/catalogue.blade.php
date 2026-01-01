@@ -66,7 +66,7 @@
             <div
                 class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 px-4 sm:px-0">
                 @forelse($books as $book)
-                    <div
+                    <a href="{{ route('books.show', $book) }}"
                         class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group flex flex-col h-full">
                         <!-- Cover Image -->
                         <div class="aspect-[2/3] bg-gray-100 relative overflow-hidden">
@@ -113,17 +113,16 @@
                                         </span>
                                     @endif
                                 </div>
-                                <a href="{{ route('books.show', $book) }}"
-                                    class="p-1.5 text-brand-600 hover:bg-brand-50 rounded-lg transition-colors"
+                                <div class="p-1.5 text-brand-600 hover:bg-brand-50 rounded-lg transition-colors"
                                     title="View Details">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                                     </svg>
-                                </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @empty
                     <div class="col-span-full py-12 text-center">
                         <div

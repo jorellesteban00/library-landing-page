@@ -16,7 +16,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/translation-widget.js'])
 </head>
 
-<body class="font-sans antialiased bg-[#F8F7F4]">
+<body class="font-sans antialiased bg-[#F8F7F4]" x-data>
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <aside
@@ -64,37 +64,43 @@
                 </a>
 
                 <!-- Borrowings (Visible to Staff & Librarian) -->
-                <a href="{{ route('staff.borrowings.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.borrowings.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Borrowings</span>
-                </a>
+                @if(Auth::user()->role === 'librarian' || Auth::user()->staff_type !== 'news')
+                    <a href="{{ route('staff.borrowings.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.borrowings.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Borrowings</span>
+                    </a>
+                @endif
 
                 <!-- Checkouts/Books (Visible to All) -->
-                <a href="{{ route('staff.books.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.books.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
-                        </path>
-                    </svg>
-                    <span class="font-medium">Books</span>
-                </a>
+                @if(Auth::user()->role === 'librarian' || Auth::user()->staff_type !== 'news')
+                    <a href="{{ route('staff.books.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.books.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Books</span>
+                    </a>
+                @endif
 
                 <!-- News Link (Visible to All) -->
-                <a href="{{ route('staff.news.index') }}"
-                    class="flex items-center px-4 py-3 {{ request()->routeIs('staff.news.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
-                        </path>
-                    </svg>
-                    <span class="font-medium">News</span>
-                </a>
+                @if(Auth::user()->role === 'librarian' || Auth::user()->staff_type !== 'books')
+                    <a href="{{ route('staff.news.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('staff.news.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+                            </path>
+                        </svg>
+                        <span class="font-medium">News</span>
+                    </a>
+                @endif
 
                 @if(Auth::user()->role === 'librarian')
                     <div class="px-4 py-2 mt-4 text-xs font-bold text-gray-400 uppercase tracking-wider">
@@ -128,6 +134,16 @@
                             </path>
                         </svg>
                         <span class="font-medium">Staff Profiles</span>
+                    </a>
+
+                    <a href="{{ route('librarian.accounts.index') }}"
+                        class="flex items-center px-4 py-3 {{ request()->routeIs('librarian.accounts.*') ? 'bg-white text-brand-600 shadow-sm' : 'hover:bg-white hover:text-gray-900' }} rounded-xl transition-all group">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Accounts</span>
                     </a>
 
                     <a href="{{ route('staff.resources.index') }}"
@@ -183,17 +199,14 @@
                         Account Settings
                     </a>
 
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
-                            class="flex items-center text-sm text-red-600 hover:text-red-700 hover:bg-red-50 py-2 px-3 rounded-lg transition-colors font-medium cursor-pointer">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H3"></path>
-                            </svg>
-                            Sign Out
-                        </a>
-                    </form>
+                    <button @click="$dispatch('open-logout-modal')"
+                        class="w-full flex items-center text-sm text-red-600 hover:text-red-700 hover:bg-red-50 py-2 px-3 rounded-lg transition-colors font-medium cursor-pointer">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H3"></path>
+                        </svg>
+                        Sign Out
+                    </button>
                 </div>
             </div>
         </aside>
@@ -203,6 +216,8 @@
             {{ $slot }}
         </main>
     </div>
+
+    <x-logout-modal />
 </body>
 
 </html>

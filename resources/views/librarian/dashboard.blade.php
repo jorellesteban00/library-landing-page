@@ -5,17 +5,14 @@
         <div class="flex justify-between items-center mb-8">
             <div>
                 <span
-                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
+                    class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
                     PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">System Overview</h1>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full transition shadow-lg">
-                    Sign Out
-                </button>
-            </form>
+            <button type="button" @click="$dispatch('open-logout-modal')"
+                class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full transition shadow-lg">
+                Sign Out
+            </button>
         </div>
 
         <!-- Stats Grid Rank 1 -->

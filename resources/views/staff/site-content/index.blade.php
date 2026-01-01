@@ -37,7 +37,7 @@
             <div class="flex justify-between items-center mb-8">
                 <div>
                     <span
-                        class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
+                        class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
                         PANEL</span>
                     <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Site Content</h1>
                     <p class="text-gray-500 mt-1">Edit your website's core content sections</p>
@@ -137,15 +137,17 @@
 
                         <div class="space-y-6">
                             <div>
-                                 <div class="flex justify-between items-center mb-2">
-                                     <label for="vision" class="block text-sm font-bold text-gray-700">
+                                <div class="flex justify-between items-center mb-2">
+                                    <label for="vision" class="block text-sm font-bold text-gray-700">
                                         <span class="flex items-center gap-2">
-                                            <span class="w-6 h-6 bg-brand-100 rounded-lg flex items-center justify-center">
+                                            <span
+                                                class="w-6 h-6 bg-brand-100 rounded-lg flex items-center justify-center">
                                                 <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
                                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
                                                     </path>
                                                 </svg>
@@ -153,22 +155,21 @@
                                             Our Vision
                                         </span>
                                     </label>
-                                    <button type="button" id="toggle-vision-source" 
+                                    <button type="button" id="toggle-vision-source"
                                         class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition flex items-center gap-2">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                         </svg>
                                         <span id="vision-source-btn-text">View Source</span>
                                     </button>
-                                 </div>
+                                </div>
                                 <!-- Vision Editor -->
                                 <div class="quill-wrapper">
                                     <div id="editor-vision"></div>
-                                    <textarea id="html-vision-source" 
+                                    <textarea id="html-vision-source"
                                         class="hidden w-full px-4 py-3 border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 font-mono text-sm"
-                                        style="border-radius: 0.75rem; min-height: 150px;"
-                                        rows="6"
+                                        style="border-radius: 0.75rem; min-height: 150px;" rows="6"
                                         placeholder="HTML source code..."></textarea>
                                     <input type="hidden" name="vision" id="vision"
                                         value="{{ $content['vision'] ?? 'To be a pioneer in sustainable knowledge management and community engagement.' }}">
@@ -176,23 +177,24 @@
                             </div>
 
                             <div>
-                                 <div class="flex justify-between items-center mb-2">
+                                <div class="flex justify-between items-center mb-2">
                                     <label for="mission" class="block text-sm font-bold text-gray-700">
                                         <span class="flex items-center gap-2">
-                                            <span class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <span
+                                                class="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center">
                                                 <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                                 </svg>
                                             </span>
                                             Our Mission
                                         </span>
                                     </label>
-                                    <button type="button" id="toggle-mission-source" 
+                                    <button type="button" id="toggle-mission-source"
                                         class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition flex items-center gap-2">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                         </svg>
                                         <span id="mission-source-btn-text">View Source</span>
@@ -201,10 +203,9 @@
                                 <!-- Mission Editor -->
                                 <div class="quill-wrapper">
                                     <div id="editor-mission"></div>
-                                    <textarea id="html-mission-source" 
+                                    <textarea id="html-mission-source"
                                         class="hidden w-full px-4 py-3 border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 font-mono text-sm"
-                                        style="border-radius: 0.75rem; min-height: 150px;"
-                                        rows="6"
+                                        style="border-radius: 0.75rem; min-height: 150px;" rows="6"
                                         placeholder="HTML source code..."></textarea>
                                     <input type="hidden" name="mission" id="mission"
                                         value="{{ $content['mission'] ?? 'To foster a culture of lifelong learning through accessible, green resources.' }}">
@@ -212,23 +213,25 @@
                             </div>
 
                             <div>
-                                 <div class="flex justify-between items-center mb-2">
+                                <div class="flex justify-between items-center mb-2">
                                     <label for="goals" class="block text-sm font-bold text-gray-700">
                                         <span class="flex items-center gap-2">
-                                            <span class="w-6 h-6 bg-lime-100 rounded-lg flex items-center justify-center">
+                                            <span
+                                                class="w-6 h-6 bg-lime-100 rounded-lg flex items-center justify-center">
                                                 <svg class="w-4 h-4 text-lime-600" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
                                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
                                             </span>
                                             Our Goals
                                         </span>
                                     </label>
-                                    <button type="button" id="toggle-goals-source" 
+                                    <button type="button" id="toggle-goals-source"
                                         class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition flex items-center gap-2">
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                         </svg>
                                         <span id="goals-source-btn-text">View Source</span>
@@ -237,10 +240,9 @@
                                 <!-- Goals Editor -->
                                 <div class="quill-wrapper">
                                     <div id="editor-goals"></div>
-                                    <textarea id="html-goals-source" 
+                                    <textarea id="html-goals-source"
                                         class="hidden w-full px-4 py-3 border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 font-mono text-sm"
-                                        style="border-radius: 0.75rem; min-height: 150px;"
-                                        rows="6"
+                                        style="border-radius: 0.75rem; min-height: 150px;" rows="6"
                                         placeholder="HTML source code..."></textarea>
                                     <input type="hidden" name="goals" id="goals"
                                         value="{{ $content['goals'] ?? 'Promoting environmental awareness while preserving human knowledge.' }}">
@@ -268,11 +270,12 @@
 
                         <div>
                             <div class="flex justify-between items-center mb-2">
-                                <label for="contact_info" class="block text-sm font-bold text-gray-700">Contact Details</label>
-                                <button type="button" id="toggle-contact-source" 
+                                <label for="contact_info" class="block text-sm font-bold text-gray-700">Contact
+                                    Details</label>
+                                <button type="button" id="toggle-contact-source"
                                     class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition flex items-center gap-2">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                     </svg>
                                     <span id="contact-source-btn-text">View Source</span>
@@ -281,10 +284,9 @@
                             <!-- Contact Info Editor -->
                             <div class="quill-wrapper">
                                 <div id="editor-contact_info"></div>
-                                <textarea id="html-contact-source" 
+                                <textarea id="html-contact-source"
                                     class="hidden w-full px-4 py-3 border-gray-200 focus:border-brand-500 focus:ring-brand-500 transition bg-gray-50 font-mono text-sm"
-                                    style="border-radius: 0.75rem; min-height: 150px;"
-                                    rows="10"
+                                    style="border-radius: 0.75rem; min-height: 150px;" rows="10"
                                     placeholder="HTML source code..."></textarea>
                                 <input type="hidden" name="contact_info" id="contact_info"
                                     value="{{ $content['contact_info'] ?? '123 Library St, Booktown' }}">
@@ -442,24 +444,24 @@
                 const quillContainer = document.getElementById(containerId);
                 // The toolbar is the previous sibling of the quill container if using default structure, BUT we wrapped it in .quill-wrapper.
                 // Actually quill attaches the toolbar before the container.
-                
+
                 const htmlSource = document.getElementById(htmlSourceId);
 
-                toggleBtn.addEventListener('click', function() {
+                toggleBtn.addEventListener('click', function () {
                     isSourceView = !isSourceView;
                     const toolbar = quillContainer.previousElementSibling; // Quill toolbar
 
                     if (isSourceView) {
                         // Switch to source view
                         htmlSource.value = quill.root.innerHTML;
-                        
+
                         // Hide Quill
                         quillContainer.classList.add('hidden');
-                        if(toolbar) toolbar.classList.add('hidden');
-                        
+                        if (toolbar) toolbar.classList.add('hidden');
+
                         // Show Source
                         htmlSource.classList.remove('hidden');
-                        
+
                         // Update Button
                         sourceBtnText.textContent = 'Visual Editor';
                         toggleBtn.classList.remove('bg-gray-100', 'hover:bg-gray-200');
@@ -467,14 +469,14 @@
                     } else {
                         // Switch back to visual editor
                         quill.root.innerHTML = htmlSource.value;
-                        
+
                         // Show Quill
                         quillContainer.classList.remove('hidden');
-                        if(toolbar) toolbar.classList.remove('hidden');
-                        
+                        if (toolbar) toolbar.classList.remove('hidden');
+
                         // Hide Source
                         htmlSource.classList.add('hidden');
-                        
+
                         // Update Button
                         sourceBtnText.textContent = 'View Source';
                         toggleBtn.classList.remove('bg-brand-500', 'text-white', 'hover:bg-brand-600');
@@ -483,7 +485,7 @@
                 });
 
                 // Update input when editing source textarea
-                htmlSource.addEventListener('input', function() {
+                htmlSource.addEventListener('input', function () {
                     input.value = this.value;
                 });
 

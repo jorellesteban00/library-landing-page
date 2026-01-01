@@ -13,9 +13,8 @@
                     </svg>
                     Back to Menus
                 </a>
-                <span
-                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
-                    PANEL</span>
+                    <span
+                        class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Add New Menu Item</h1>
                 <p class="text-gray-500 mt-2">Create a navigation link to internal pages or external resources</p>
             </div>

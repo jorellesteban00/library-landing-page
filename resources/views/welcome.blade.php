@@ -125,15 +125,12 @@
 
                             <div class="border-t border-gray-100 my-1"></div>
 
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors w-full font-medium">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                    </svg>
-                                    Sign Out
-                                </button>
-                            </form>
+                            <button type="button" @click="$dispatch('open-logout-modal')" class="flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors w-full font-medium">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                </svg>
+                                Sign Out
+                            </button>
                         </div>
                     </div>
                 @else
@@ -393,7 +390,7 @@
                         {!! $content['contact_info'] ?? '' !!}
                     </div>
                     <div class="flex gap-4">
-                        <a href="#"
+                        <a href="https://www.facebook.com/happytails.spc" target="_blank" rel="noopener noreferrer"
                             class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full text-gray-600 hover:bg-brand-600 hover:text-white transition-colors">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                 <path
@@ -466,6 +463,7 @@
             </div>
         </div>
     </footer>
+    <x-logout-modal />
 </body>
 
 </html>

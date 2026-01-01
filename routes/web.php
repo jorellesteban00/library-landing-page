@@ -42,8 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Librarian Routes
     Route::middleware(['role:librarian'])->prefix('librarian')->name('librarian.')->group(function () {
         Route::get('/dashboard', [\App\Http\Controllers\Librarian\DashboardController::class, 'index'])->name('dashboard');
-        Route::patch('/users/{user}/role', [\App\Http\Controllers\Librarian\DashboardController::class, 'updateRole'])->name('users.update-role');
+        Route::patch('/users/{user}/role', [\App\Http\Controllers\Librarian\DashboardController::class, 'updateRole'])->name('users.update-role'); // Keeping for backward compatibility if needed, but new one supersedes.
         Route::delete('/users/{user}', [\App\Http\Controllers\Librarian\DashboardController::class, 'destroy'])->name('users.destroy');
+        Route::resource('accounts', \App\Http\Controllers\Librarian\AccountController::class)->only(['index', 'update']);
     });
 
     // Staff & Librarian Management Routes
@@ -68,8 +69,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Librarian Only Management
+    // Librarian Only Management
     Route::middleware(['role:librarian'])->prefix('staff')->name('staff.')->group(function () {
         Route::resource('staff-profiles', \App\Http\Controllers\StaffProfileController::class)->except(['show']);
+
         Route::post('/staff-profiles/reorder', [\App\Http\Controllers\StaffProfileController::class, 'reorder'])->name('staff-profiles.reorder');
 
         // Menu Management Routes

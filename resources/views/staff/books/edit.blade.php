@@ -7,6 +7,21 @@
             <!-- Header -->
             <div class="flex justify-between items-center mb-8">
                 <div>
+                    <div class="mb-4">
+                        <a href="{{ route('staff.books.index') }}"
+                            class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 text-sm group">
+                            <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7">
+                                </path>
+                            </svg>
+                            Back to Books
+                        </a>
+                    </div>
+                    <span
+                        class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
+                        PANEL</span>
                     <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Edit Book</h1>
                 </div>
                 <div class="flex gap-3">
@@ -95,9 +110,9 @@
                                     'Graphic Novel',
                                     'Self-Help'
                                 ] as $cat)
-                                                <option value="{{ $cat }}" {{ (old('genre', $book->genre) == $cat) ? 'selected' : '' }}>
-                                                    {{ $cat }}
-                                                </option>
+                                                    <option value="{{ $cat }}" {{ (old('genre', $book->genre) == $cat) ? 'selected' : '' }}>
+                                                        {{ $cat }}
+                                                    </option>
                             @endforeach
                         </select>
                     </div>
@@ -111,7 +126,8 @@
                                         class="text-red-500">*</span></label>
 
 
-                               
+
+                                                              
                                                               
                                                                <input type="number" name="total_quantity"
                                     value="{{ old('total_quantity', $book->total_quantity ?? 1) }}" min="1"

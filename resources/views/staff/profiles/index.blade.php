@@ -5,17 +5,15 @@
         <div class="flex justify-between items-center mb-8">
             <div>
                 <span
-                    class="inline-block py-1 px-3 rounded-full bg-gray-900 text-white text-xs font-bold tracking-wide mb-2">ADMIN
+                    class="inline-block py-1 px-3 rounded-full bg-brand-600 text-white text-xs font-bold tracking-wide mb-2">ADMIN/STAFF
                     PANEL</span>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Staff Members</h1>
+                <p class="text-gray-500 mt-1">Manage staff profiles and drag to reorder appearance on homepage</p>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit"
-                    class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full transition shadow-lg">
-                    Sign Out
-                </button>
-            </form>
+            <button type="button" @click="$dispatch('open-logout-modal')"
+                class="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-6 rounded-full transition shadow-lg">
+                Sign Out
+            </button>
         </div>
 
         @if (session('status'))
@@ -28,11 +26,11 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div id="staff-profiles-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
-            <!-- Add New Card -->
+            <!-- Add New Card (Static) -->
             <a href="{{ route('staff.staff-profiles.create') }}"
-                class="group flex flex-col items-center justify-center h-full min-h-[300px] border-2 border-dashed border-brand-200 hover:border-brand-500 rounded-2xl bg-brand-50/50 hover:bg-brand-50 transition p-6 cursor-pointer">
+                class="static-card group flex flex-col items-center justify-center h-full min-h-[300px] border-2 border-dashed border-brand-200 hover:border-brand-500 rounded-2xl bg-brand-50/50 hover:bg-brand-50 transition p-6 cursor-pointer">
                 <div
                     class="h-16 w-16 bg-white rounded-full flex items-center justify-center text-brand-400 group-hover:text-brand-600 group-hover:scale-110 transition shadow-sm mb-4">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,9 +43,19 @@
 
             <!-- Staff Cards -->
             @foreach($staffProfiles as $profile)
-                <div
-                    class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:shadow-md transition group h-full">
-                    <div class="relative mb-4">
+                <div data-id="{{ $profile->id }}"
+                    class="draggable-card relative bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col items-center text-center hover:shadow-md transition group h-full">
+
+                    <!-- Drag Handle -->
+                    <div
+                        class="absolute top-2 right-2 z-10 cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 drag-handle p-2 bg-white/80 rounded-full hover:bg-white transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16">
+                            </path>
+                        </svg>
+                    </div>
+
+                    <div class="relative mb-4 mt-2">
                         <div class="h-24 w-24 rounded-full overflow-hidden border-4 border-gray-50 shadow-inner">
                             @if($profile->image)
                                 <img src="{{ asset('storage/' . $profile->image) }}" class="h-full w-full object-cover">
@@ -60,9 +68,6 @@
                                 </div>
                             @endif
                         </div>
-                        <!-- Status Dot (Optional visual) -->
-                        <span
-                            class="absolute bottom-1 right-1 h-4 w-4 bg-green-500 border-2 border-white rounded-full"></span>
                     </div>
 
                     <h3 class="text-xl font-bold text-gray-900 mb-1">{{ $profile->name }}</h3>
@@ -139,5 +144,46 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    <!-- Sortable JS for drag and drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const grid = document.getElementById('staff-profiles-list');
+            if (grid) {
+                new Sortable(grid, {
+                    draggable: '.draggable-card',
+                    handle: '.drag-handle',
+                    animation: 150,
+                    ghostClass: 'opacity-50',
+                    onMove: function (evt) {
+                        return !evt.related.classList.contains('static-card');
+                    },
+                    onEnd: function (evt) {
+                        const items = grid.querySelectorAll('.draggable-card');
+                        const ids = Array.from(items).map(item => item.dataset.id);
+
+                        fetch("{{ route('staff.staff-profiles.reorder') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                ids: ids
+                            })
+                        }).then(response => response.json()).then(data => {
+                            if (data.status === 'success') {
+                                console.log('Staff order saved');
+                            }
+                        }).catch(error => {
+                            console.error('Error saving order:', error);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
 </x-librarian-layout>
