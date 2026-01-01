@@ -11,9 +11,9 @@ class TranslationController
      * Translate text to Tagalog using Google Translate API
      * 
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function translate(Request $request)
+    public function translate(Request $request): \Illuminate\Http\JsonResponse
     {
         $validated = $request->validate([
             'text' => 'required|string|max:1000',
@@ -35,7 +35,7 @@ class TranslationController
             $response = Http::get('https://api.mymemory.translated.net/get', [
                 'q' => $text,
                 'langpair' => 'en|' . $targetLang,
-            ]);
+            ])->throw();
 
             $data = $response->json();
 
@@ -65,9 +65,9 @@ class TranslationController
      * Batch translate multiple texts to Tagalog
      * 
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function batchTranslate(Request $request)
+    public function batchTranslate(Request $request): \Illuminate\Http\JsonResponse
     {
         $validated = $request->validate([
             'texts' => 'required|array|max:10',
@@ -91,7 +91,7 @@ class TranslationController
                 $response = Http::get('https://api.mymemory.translated.net/get', [
                     'q' => $text,
                     'langpair' => 'en|' . $targetLang,
-                ]);
+                ])->throw();
 
                 $data = $response->json();
 
