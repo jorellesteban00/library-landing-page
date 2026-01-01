@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PageController;
 use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\BorrowingController;
+use App\Http\Controllers\Api\TranslationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,3 +53,7 @@ Route::get('/staff', [StaffController::class, 'index']);
 Route::get('/staff/{staff}', [StaffController::class, 'show']);
 
 Route::get('/menus', [MenuController::class, 'index']);
+
+// Translation API (Public)
+Route::post('/translate', [TranslationController::class, 'translate']);
+Route::post('/translate-batch', [TranslationController::class, 'batchTranslate']);
