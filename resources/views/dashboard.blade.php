@@ -42,7 +42,7 @@
                             @if($activeBorrowings->count() > 0)
                                 <div class="space-y-4">
                                     @foreach($activeBorrowings as $loan)
-                                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-brand-200 transition-colors group">
+                                        <div x-data="{ showReturnModal: false }" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-brand-200 transition-colors group">
                                             <!-- Book Cover Thumb -->
                                              <div class="w-16 h-20 bg-gray-200 rounded-lg overflow-hidden shrink-0 shadow-sm">
                                                 @if($loan->book->cover_image)
@@ -71,13 +71,66 @@
                                             </div>
 
                                             <div>
-                                                 <form action="{{ route('borrowings.return', $loan) }}" method="POST" onsubmit="return confirm('Confirm return?')">
-                                                     @csrf
-                                                     @method('PATCH')
-                                                     <button type="submit" class="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Return Book">
-                                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                                     </button>
-                                                 </form>
+                                                 <button @click="showReturnModal = true" type="button" class="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Return Book">
+                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                                 </button>
+                                            </div>
+
+                                            <!-- Confirm Return Modal -->
+                                            <div x-show="showReturnModal" 
+                                                 x-transition:enter="transition ease-out duration-300"
+                                                 x-transition:enter-start="opacity-0"
+                                                 x-transition:enter-end="opacity-100"
+                                                 x-transition:leave="transition ease-in duration-200"
+                                                 x-transition:leave-start="opacity-100"
+                                                 x-transition:leave-end="opacity-0"
+                                                 class="fixed inset-0 z-50 flex items-center justify-center"
+                                                 style="display: none;">
+                                                <!-- Backdrop -->
+                                                <div class="fixed inset-0 bg-black/50" @click="showReturnModal = false"></div>
+                                                
+                                                <!-- Modal Content -->
+                                                <div x-show="showReturnModal"
+                                                     x-transition:enter="transition ease-out duration-300"
+                                                     x-transition:enter-start="opacity-0 transform scale-95"
+                                                     x-transition:enter-end="opacity-100 transform scale-100"
+                                                     x-transition:leave="transition ease-in duration-200"
+                                                     x-transition:leave-start="opacity-100 transform scale-100"
+                                                     x-transition:leave-end="opacity-0 transform scale-95"
+                                                     class="relative bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 z-10">
+                                                    
+                                                    <!-- Green Checkmark Icon -->
+                                                    <div class="flex justify-center mb-6">
+                                                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                                                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <!-- Title -->
+                                                    <h3 class="text-xl font-bold text-gray-900 text-center mb-2">Confirm Return</h3>
+                                                    
+                                                    <!-- Description -->
+                                                    <p class="text-gray-500 text-center mb-6">Are you sure you want to return this book? The due date and status will be updated immediately.</p>
+                                                    
+                                                    <!-- Buttons -->
+                                                    <div class="flex justify-center gap-3">
+                                                        <button @click="showReturnModal = false" 
+                                                                type="button"
+                                                                class="px-6 py-2.5 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors">
+                                                            Cancel
+                                                        </button>
+                                                        <form action="{{ route('borrowings.return', $loan) }}" method="POST" class="inline">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <button type="submit" 
+                                                                    class="px-6 py-2.5 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition-colors">
+                                                                Confirm Return
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
